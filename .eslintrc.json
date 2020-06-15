@@ -19,6 +19,7 @@
     "rules": {
         "react/jsx-props-no-spreading": ["off"],
         "no-console": ["off"],
+        "no-underscore-dangle": ["off"],
         "quotes": [2, "single", { "avoidEscape": true }],
         "jsx-a11y/label-has-associated-control": [
             "warn",
