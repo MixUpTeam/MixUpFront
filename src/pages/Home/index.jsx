@@ -1,6 +1,7 @@
 import React from "react";
 import "./styles.scss";
 import bgVideo from "assets/videos/home-bg.mp4";
+import NewPlaylistButton from "components/NewPlaylistButton";
 
 const Home = () => {
   console.log("in home page");
@@ -25,7 +26,7 @@ const Home = () => {
               preuve d’une étonnante bêtise lorsqu’il s’agissait de leur fils
               Dudley
             </p>
-            <p>CTA coming soon</p>
+            <NewPlaylistButton />
           </div>
         </div>
       </div>
