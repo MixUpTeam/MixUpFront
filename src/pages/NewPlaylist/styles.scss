@@ -1,0 +1,41 @@
+@import "../../assets/scss/variables";
+
+body {
+  background-color: rgb(33, 33, 33);
+}
+
+h1 {
+  color: #f7f9f9 !important;
+  font-size: 5rem;
+  font-family: "PoppinsBoldItalic";
+  padding: 5% 0 2% 0;
+}
+
+#new-playlist-button {
+  width: 18%;
+}
+
+#form-new-playlist {
+  width: 100%;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: #f7f9f9 !important;
+}
+
+.MuiInputBase-input {
+  height: 100% !important;
+}
+
+#outlined-basic-label {
+  color: #f7f9f9;
+}
+
+.MuiInputBase-root {
+  color: #f7f9f9 !important;
+  font-size: 2em !important;
+}
+
+.PrivateNotchedOutline-legendLabelled-4 {
+  font-size: 10px !important;
+}
