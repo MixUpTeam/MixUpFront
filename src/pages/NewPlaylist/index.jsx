@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./styles.scss";
-import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -15,13 +14,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NewPLaylist = () => {
+const NewPlaylist = () => {
   const classes = useStyles();
   const [input, setInput] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(input);
+    // Api request : method:post, url:'/playlist'
+    // If(success) history.push("/playlist/${:playlistId}")
   };
 
   return (
@@ -52,4 +53,4 @@ const NewPLaylist = () => {
   );
 };
 
-export default NewPLaylist;
+export default NewPlaylist;
