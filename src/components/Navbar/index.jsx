@@ -1,21 +1,20 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React from 'react';
+import { useLocation, NavLink, Link, useHistory } from 'react-router-dom';
 
-import { NavLink, Link, useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import Cookies from "js-cookie";
+import { useSelector, useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
 
-import { Menu, Button } from "antd";
+import { Menu, Button } from 'antd';
 import {
   UserOutlined,
   MailOutlined,
   AppstoreOutlined,
   SettingOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 
-import { removeConnexion, removeProfile } from "../../redux";
+import { removeConnection, removeProfile } from '../../redux';
 
-import "./styles.scss";
+import './styles.scss';
 
 const { SubMenu } = Menu;
 
@@ -23,31 +22,31 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const logStatus = useSelector((state) => state.log.log);
-  let location = useLocation();
+  const location = useLocation();
   console.log(location.pathname);
 
-  const deconnexion = () => {
-    const token = JSON.parse(Cookies.get("token")).jwt;
-    fetch("https://form-you-back.herokuapp.com/users/sign_out.json", {
-      method: "delete",
+  const disconnection = () => {
+    const token = JSON.parse(Cookies.get('token')).jwt;
+    fetch('https://form-you-back.herokuapp.com/users/sign_out.json', {
+      method: 'delete',
       headers: {
         Authorization: token,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     })
       .then((response) => {
-        if (response.statusText === "No Content") {
-          dispatch(removeConnexion());
+        if (response.statusText === 'No Content') {
+          dispatch(removeConnection());
           dispatch(removeProfile());
-          Cookies.remove("token");
-          history.push("/");
+          Cookies.remove('token');
+          history.push('/');
         } else response.json();
       })
       .catch((error) => console.error(error));
   };
 
   const handleClick = (e) => {
-    console.log("click", e);
+    console.log('click', e);
   };
 
   return (
@@ -58,7 +57,7 @@ const Navbar = () => {
           mode="horizontal"
           onClick={handleClick}
           theme="dark"
-          className={location.pathname === "/" ? "homeNavbar" : null}
+          className={location.pathname === '/' ? 'homeNavbar' : null}
         >
           <Menu.Item key="4" icon={<AppstoreOutlined />}>
             <NavLink exact to="/" activeClassName="active">
@@ -86,8 +85,8 @@ const Navbar = () => {
 
           {logStatus ? (
             <Menu.Item key="9" disabled icon={<SettingOutlined />}>
-              <Button type="button" onClick={deconnexion}>
-                Deconnexion
+              <Button type="button" onClick={disconnection}>
+                Disconnect
               </Button>
             </Menu.Item>
           ) : (

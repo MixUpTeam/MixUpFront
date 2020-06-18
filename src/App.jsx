@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-import Navbar from "components/Navbar";
-import Authroute from "tools/Authroute";
+import Navbar from 'components/Navbar';
+import Authroute from 'tools/Authroute';
 
 import Register from 'pages/Register';
 import LogIn from 'pages/Login';
@@ -12,30 +12,30 @@ import About from 'pages/About';
 import Profile from 'pages/Profile';
 import NotFound from 'pages/NotFound';
 import Playlist from 'pages/Playlist';
-import NewPlaylist from "pages/NewPlaylist";
+import NewPlaylist from 'pages/NewPlaylist';
 
-import Cookies from "js-cookie";
-import { setConnexion, setProfile } from "./redux";
+import Cookies from 'js-cookie';
+import { setConnection, setProfile } from './redux';
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (Cookies.get("token")) {
-      const token = JSON.parse(Cookies.get("token")).jwt;
+    if (Cookies.get('token')) {
+      const token = JSON.parse(Cookies.get('token')).jwt;
 
-      fetch("https://form-you-back.herokuapp.com/users/sign_in.json", {
-        method: "post",
+      fetch('https://form-you-back.herokuapp.com/users/sign_in.json', {
+        method: 'post',
         headers: {
           Authorization: token,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       })
         .then((response) => response.json())
         .then((response) => {
           if (!response.error) {
             dispatch(setProfile(response));
-            dispatch(setConnexion());
+            dispatch(setConnection());
           }
         })
         .catch((error) => console.error(error));
@@ -50,7 +50,7 @@ const App = () => {
 
           <Switch>
             <Route exact path="/new-playlist" component={NewPlaylist} />
-            {/*PrivateRoute*/}
+            {/* PrivateRoute */}
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/about" component={About} />

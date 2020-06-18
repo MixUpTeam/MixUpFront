@@ -1,2 +1,2 @@
-export const CONNEXION = 'CONNEXION';
-export const DECONNEXION = 'DECONNEXION';
+export const CONNECTION = 'CONNECTION';
+export const DISCONNECTION = 'DISCONNECTION';

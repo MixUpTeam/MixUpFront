@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Form, Input, Button, message } from 'antd';
 import Cookies from 'js-cookie';
 
-import { setProfile, setConnexion } from '../../redux';
+import { setProfile, setConnection } from '../../redux';
 
 const layout = {
   labelCol: {
@@ -37,7 +37,7 @@ const Register = () => {
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
-        dispatch(setConnexion());
+        dispatch(setConnection());
         history.push('/');
       })
       .catch((error) => console.log(error));

@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Form, Input, Button, message } from 'antd';
 import Cookies from 'js-cookie';
 
-import { setConnexion, setProfile } from '../../redux';
+import { setConnection, setProfile } from '../../redux';
 
 const layout = {
   labelCol: {
@@ -26,7 +26,7 @@ const LogIn = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const Connexion = ({ email, password }) => {
+  const Connection = ({ email, password }) => {
     const data = {
       email,
       password,
@@ -52,7 +52,7 @@ const LogIn = () => {
         } else {
           message.success('Profile well login', 3);
           Cookies.set('token', { jwt: result.jwt }, { expires: 7 });
-          dispatch(setConnexion());
+          dispatch(setConnection());
           dispatch(setProfile(result));
           history.push('/');
         }
@@ -62,7 +62,7 @@ const LogIn = () => {
 
   const onFinish = (values) => {
     console.log('Success:', values);
-    Connexion(values);
+    Connection(values);
   };
 
   const onFinishFailed = (errorInfo) => {
