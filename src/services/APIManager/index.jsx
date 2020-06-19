@@ -15,7 +15,6 @@ API.interceptors.request.use(
     },
   }),
   (error) => {
-    // handle the error
     return Promise.reject(error);
   }
 );
@@ -23,11 +22,19 @@ API.interceptors.request.use(
 export default class APIManager {
   static async createPlaylist(userId, name) {
     const res = await API.post("api/v1/playlists", { owner_id: userId, name });
-    return res;
+    return res.data;
   }
 
   static async addTrackToPlaylist(added_by_id, track_spotify_id, playlist_id) {
-    const res = await API.post("api/v1/track_playlists", { added_by_id, track_spotify_id, playlist_id });
-    return res;
+    const res = await API.post("api/v1/track_playlists", {
+      added_by_id,
+      track_spotify_id,
+      playlist_id,
+    });
+    return res.data;
+  }
+  static async showPlaylist(playlistId) {
+    const res = await API.get(`api/v1/playlists/${playlistId}`);
+    return res.data;
   }
 }
