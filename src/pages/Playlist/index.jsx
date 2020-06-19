@@ -1,8 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
+import './styles.scss';
+import APIManager from "services/APIManager";
+import { makeStyles } from '@material-ui/core/styles';
+
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import Button from '@material-ui/core/Button';
 import ShortID from 'shortid';
+import { message } from 'antd';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '50ch',
+      borderColor: 'white',
+    },
+  },
+}));
 
 const Playlist = () => {
   console.log('in page playlist');
+  const userId = 1;
+  const playlistId = 2;
+  const [userTrackChoice, setUserTrackChoice] = useState(null);
+  const classes = useStyles();
+  const tempFakeSuggestions = [
+    {
+      id: 'this is the first choice',
+    },
+    {
+      id: 'second choice is this',
+    },
+    {
+      id: 'yet here is a third one',
+    },
+    {
+      id: 'about time to have a fourth',
+    },
+    {
+      id: 'be careful, fifth coming',
+    },
+  ];
 
   const fakeResponse = {
     tracks: {
@@ -4960,9 +4999,58 @@ const Playlist = () => {
     );
   };
 
+  const searchBarOnSubmit = async (e) => {
+    e.preventDefault();
+    if (!userTrackChoice) return message.error('Please choose a track');
+    const res = await APIManager.addTrackToPlaylist(userId, userTrackChoice, playlistId);
+    console.log(res);
+    if (res.data.status === "error") return message.error(res.data.messages[0]);
+    return message.success(res.data.track_spotify_id);
+  };
+
+  const inputOnChange = (e, values) => {
+    const selectedTrack = values.id;
+    setUserTrackChoice(selectedTrack);
+  };
+
   return (
     <>
-      <div className="page">
+      <div className="page playlist">
+        <p>here you see the name of the playlist</p>
+        <p>here you see the owner_username</p>
+        <div>
+          <p>This is where you add a song</p>
+          <form
+            className={classes.root}
+            noValidate
+            autoComplete="off"
+            onSubmit={(e) => searchBarOnSubmit(e)}
+          >
+            <Autocomplete
+              id="suggestion-list"
+              options={tempFakeSuggestions}
+              getOptionLabel={(option) => option.id}
+              style={{ width: '100%' }}
+              onChange={inputOnChange}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  id="trach-search-input"
+                  label="name a track here"
+                />
+              )}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="secondary"
+              id="new-playlist-button"
+            >
+              Add this track
+            </Button>
+          </form>
+        </div>
         <p>This is the detail page of a playlist</p>
         {tracks && listDisplay()}
       </div>

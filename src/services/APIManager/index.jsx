@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const API = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "https://mixup-the-app.herokuapp.com",
 });
 
 API.interceptors.request.use(
@@ -23,6 +23,11 @@ API.interceptors.request.use(
 export default class APIManager {
   static async createPlaylist(userId, name) {
     const res = await API.post("api/v1/playlists", { owner_id: userId, name });
+    return res;
+  }
+
+  static async addTrackToPlaylist(added_by_id, track_spotify_id, playlist_id) {
+    const res = await API.post("api/v1/track_playlists", { added_by_id, track_spotify_id, playlist_id });
     return res;
   }
 }
