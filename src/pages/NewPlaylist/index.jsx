@@ -27,8 +27,7 @@ const NewPlaylist = () => {
     if (input) {
       const res = await APIManager.createPlaylist(1, input);
       console.log(res);
-      if (res.statusText === "Created")
-        return history.push(`/playlist/${res.data.id}`);
+      if (res.status === "success") return history.push(`/playlist/${res.id}`);
       else return message.error("Oops, please try again!");
     } else return message.error("Name can't be blank...");
   };

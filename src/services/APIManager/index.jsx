@@ -23,7 +23,7 @@ API.interceptors.request.use(
 export default class APIManager {
   static async createPlaylist(userId, name) {
     const res = await API.post("api/v1/playlists", { owner_id: userId, name });
-    return res;
+    return res.data;
   }
 
   static async addTrackToPlaylist(added_by_id, track_spotify_id, playlist_id) {
