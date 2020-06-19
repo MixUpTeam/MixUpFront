@@ -16,7 +16,7 @@ const Home = () => {
           id="homePageVideoBg"
         >
           <source src={bgVideo} type="video/mp4" />
-          Your browserdiv does not support the video tag.
+          Your browser does not support the video tag.
         </video>
         <div className="homePageContent">
           <div className="overFlowText">
