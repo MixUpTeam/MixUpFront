@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import APIManager from "services/APIManager";
+import { message } from "antd";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,8 +28,9 @@ const NewPlaylist = () => {
       const res = await APIManager.createPlaylist(1, input);
       console.log(res);
       if (res.statusText === "Created")
-        history.push(`/playlist/${res.data.id}`);
-    }
+        return history.push(`/playlist/${res.data.id}`);
+      else return message.error("Oops, please try again!");
+    } else return message.error("Name can't be blank...");
   };
 
   return (
