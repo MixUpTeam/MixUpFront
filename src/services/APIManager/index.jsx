@@ -25,4 +25,9 @@ export default class APIManager {
     const res = await API.post("api/v1/playlists", { owner_id: userId, name });
     return res;
   }
+
+  static async addTrackToPlaylist(added_by_id, track_spotify_id, playlist_id) {
+    const res = await API.post("api/v1/track_playlists", { added_by_id, track_spotify_id, playlist_id });
+    return res;
+  }
 }
