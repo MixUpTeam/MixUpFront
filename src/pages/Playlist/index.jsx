@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './styles.scss';
+import APIManager from "services/APIManager";
 import { makeStyles } from '@material-ui/core/styles';
 
 import TextField from '@material-ui/core/TextField';
@@ -20,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Playlist = () => {
   console.log('in page playlist');
+  const userId = 1;
+  const playlistId = 2;
   const [userTrackChoice, setUserTrackChoice] = useState(null);
   const classes = useStyles();
   const tempFakeSuggestions = [
@@ -4999,7 +5002,10 @@ const Playlist = () => {
   const searchBarOnSubmit = async (e) => {
     e.preventDefault();
     if (!userTrackChoice) return message.error('Please choose a track');
-    return message.success(userTrackChoice);
+    const res = await APIManager.addTrackToPlaylist(userId, userTrackChoice, playlistId);
+    console.log(res);
+    if (res.data.status === "error") return message.error(res.data.messages[0]);
+    return message.success(res.data.track_spotify_id);
   };
 
   const inputOnChange = (e, values) => {
