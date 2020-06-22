@@ -21,6 +21,6 @@ npm start
 ## Authors
 
 -   **@floriansr** - (https://github.com/floriansr)
--   **@julienemo - (https://github.com/julienemo)
+-   **@julienemo** - (https://github.com/julienemo)
 -   **@raphaelchpprt**  - (https://github.com/raphaelchpprt)
 -   **@Yous91**  - (https://github.com/Yous91)
