@@ -122,17 +122,20 @@ const Playlist = () => {
         <p>This is the detail page of a playlist</p>
         <p>{playlist.name}</p>
         {tracks &&
-          tracks.map((track) => (
-            <Card key={ShortID.generate()} style={{ width: 300 }}>
-              <p>{track.track_spotify_id}</p>
-              <p>{track.score}</p>
-              <LikeOutlined onClick={() => Likes(track.id, 5)} />
-              <LikeOutlined
-                rotate={180}
-                onClick={() => Dislikes(track.id, 5)}
-              />
-            </Card>
-          ))}
+          tracks
+            .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+            .sort((a, b) => b.score - a.score)
+            .map((track) => (
+              <Card key={ShortID.generate()} style={{ width: 300 }}>
+                <p>{track.track_spotify_id}</p>
+                <p>{track.score}</p>
+                <LikeOutlined onClick={() => Likes(track.id, 5)} />
+                <LikeOutlined
+                  rotate={180}
+                  onClick={() => Dislikes(track.id, 5)}
+                />
+              </Card>
+            ))}
       </div>
     </>
   );
