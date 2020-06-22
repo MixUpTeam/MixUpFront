@@ -1,7 +1,4 @@
-import {
-  SET_TRACKS,
-  CREATE_TRACK
-} from 'redux/tracklist/tracklistType';
+import { SET_TRACKS, CREATE_TRACK } from 'redux/tracklist/tracklistType';
 
 export const setTracks = (tracks) => {
   return {
