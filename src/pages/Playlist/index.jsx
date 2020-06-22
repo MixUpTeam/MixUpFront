@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import APIManager from 'services/APIManager';
-import ShortID from 'shortid';
-import './styles.scss';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import APIManager from "services/APIManager";
+import SpotifyAPIManager from "services/SpotifyAPIManager";
+import ShortID from "shortid";
+import "./styles.scss";
 
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import Button from '@material-ui/core/Button';
-import { message, Card } from 'antd';
-import { LikeOutlined } from '@ant-design/icons';
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import Button from "@material-ui/core/Button";
+import { message, Card } from "antd";
+import { LikeOutlined } from "@ant-design/icons";
 
-import { setTracks } from '../../redux';
+import { setTracks } from "../../redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& > *': {
+    "& > *": {
       margin: theme.spacing(1),
-      width: '50ch',
-      borderColor: 'white',
+      width: "50ch",
+      borderColor: "white",
     },
   },
 }));
@@ -31,22 +32,25 @@ const Playlist = () => {
   const dispatch = useDispatch();
   const tracklist = useSelector((state) => state.tracks.tracks);
   const [userTrackChoice, setUserTrackChoice] = useState(null);
+  const [playlist, setPlaylist] = useState("");
+  const [tracks, setTracks] = useState(null);
+  const [spotifyDetails, setSpotifyDetails] = useState();
 
   const tempFakeSuggestions = [
     {
-      id: 'this is the first choice',
+      id: "this is the first choice",
     },
     {
-      id: 'second choice is this',
+      id: "second choice is this",
     },
     {
-      id: 'yet here is a third one',
+      id: "yet here is a third one",
     },
     {
-      id: 'about time to have a fourth',
+      id: "about time to have a fourth",
     },
     {
-      id: 'be careful, fifth coming',
+      id: "be careful, fifth coming",
     },
   ];
 
@@ -56,9 +60,10 @@ const Playlist = () => {
 
   useEffect(() => {
     const fetchPlaylist = async () => {
+      console.log("fetchPlaylist -> playlistId", playlistId);
       const res = await APIManager.showPlaylist(playlistId);
       if (res.entries.length !== 0) setTrackPlaylist(res.entries);
-      else message.success('This is a fresh playlist', 3);
+      else message.success("This is a fresh playlist", 3);
     };
     fetchPlaylist();
   }, [playlistId]);
@@ -66,29 +71,40 @@ const Playlist = () => {
   const Likes = async (track) => {
     const res = await APIManager.upVote(track.id, 6); // curent_user
     const playlist = await APIManager.showPlaylist(res.playlist_id);
-    if (playlist.status === 'success') setTrackPlaylist(playlist.entries);
+    if (playlist.status === "success") setTrackPlaylist(playlist.entries);
   };
 
   const Dislikes = async (track) => {
     const res = await APIManager.downVote(track.id, 6); // curent_user
     const playlist = await APIManager.showPlaylist(res.playlist_id);
-    if (playlist.status === 'success') setTrackPlaylist(playlist.entries);
+    if (playlist.status === "success") setTrackPlaylist(playlist.entries);
   };
+
+  useEffect(() => {
+    const fetchTracks = async () => {
+      const res = await SpotifyAPIManager.getTrackById(tracks);
+      console.log(res.tracks);
+      setSpotifyDetails(res.tracks);
+    };
+    if (tracks) fetchTracks();
+  }, [tracks]);
 
   const searchBarOnSubmit = async (e) => {
     e.preventDefault();
+    console.log("searchBarOnSubmit -> userId", userId);
+    console.log("searchBarOnSubmit -> userTrackChoice", userTrackChoice);
+    console.log("searchBarOnSubmit -> playlistId", playlistId);
 
-    if (!userTrackChoice) message.error('Please choose a track');
+    if (!userTrackChoice) return message.error("Please choose a track");
     const res = await APIManager.addTrackToPlaylist(
       userId,
       userTrackChoice,
       playlistId
     );
-
-    if (res.status === 'error') message.error(res.messages[0]);
-
     const playlist = await APIManager.showPlaylist(res.playlist_id);
-    if (playlist.status === 'success') setTrackPlaylist(playlist.entries);
+    if (res.status === "error") return message.error(res.messages[0]);
+    setTracks([...tracks, res]);
+    setTrackPlaylist(playlist.entries);
   };
 
   const inputOnChange = (e, values) => {
@@ -110,7 +126,7 @@ const Playlist = () => {
               id="suggestion-list"
               options={tempFakeSuggestions}
               getOptionLabel={(option) => option.id}
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
               onChange={inputOnChange}
               renderInput={(params) => (
                 <TextField
