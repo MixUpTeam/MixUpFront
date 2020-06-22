@@ -71,7 +71,7 @@ const Playlist = () => {
     const res = await APIManager.addTrackToPlaylist(
       userId,
       userTrackChoice,
-      playlistId
+      playlistId,
     );
     if (res.status === "error") return message.error(res.messages[0]);
     setTracks([...tracks, res]);
@@ -123,7 +123,7 @@ const Playlist = () => {
           tracks.map((track) => (
             <Card key={ShortID.generate()} style={{ width: 300 }}>
               <p>{track.track_spotify_id}</p>
-              <LikeOutlined onClick={Likes}/> 
+              <LikeOutlined onClick={() => Likes(track.id, 11)}/> 
               <LikeOutlined rotate={180} onClick={Dislikes}/>
             </Card>
           ))}
