@@ -8,7 +8,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Button from "@material-ui/core/Button";
-import { message } from "antd";
+import { message, Card } from "antd";
+import {
+  LikeOutlined
+} from '@ant-design/icons';
+
+import Likes from 'tools/Likes'
+import Dislikes from 'tools/Dislikes'
+
 
 import ShortID from "shortid";
 
@@ -114,7 +121,11 @@ const Playlist = () => {
         <p>{playlist.name}</p>
         {tracks &&
           tracks.map((track) => (
-            <p key={ShortID.generate()}>{track.track_spotify_id}</p>
+            <Card key={ShortID.generate()} style={{ width: 300 }}>
+              <p>{track.track_spotify_id}</p>
+              <LikeOutlined onClick={Likes}/> 
+              <LikeOutlined rotate={180} onClick={Dislikes}/>
+            </Card>
           ))}
       </div>
     </>
