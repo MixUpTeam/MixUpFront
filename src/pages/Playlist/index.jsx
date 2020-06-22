@@ -125,7 +125,7 @@ const Playlist = () => {
           tracks.map((track) => (
             <Card key={ShortID.generate()} style={{ width: 300 }}>
               <p>{track.track_spotify_id}</p>
-              <LikeOutlined onClick={() => Likes(track.id, 11)} />
+              <LikeOutlined onClick={() => Likes(track.id, 5)} />
               <LikeOutlined rotate={180} onClick={Dislikes} />
             </Card>
           ))}
