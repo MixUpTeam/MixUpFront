@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import "./styles.scss";
-import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import APIManager from "services/APIManager";
-import { message } from "antd";
+import React, { useState } from 'react';
+import './styles.scss';
+import { useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import APIManager from 'services/APIManager';
+import { message } from 'antd';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    "& > *": {
+    '& > *': {
       margin: theme.spacing(1),
-      width: "50ch",
-      borderColor: "white",
+      width: '50ch',
+      borderColor: 'white',
     },
   },
 }));
@@ -27,9 +27,10 @@ const NewPlaylist = () => {
     if (input) {
       const res = await APIManager.createPlaylist(1, input);
       console.log(res);
-      if (res.status === "success") return history.push(`/playlist/${res.id}`);
-      else return message.error("Oops, please try again!", 3);
-    } else return message.error("Name can't be blank...", 3);
+      if (res.status === 'success') return history.push(`/playlist/${res.id}`);
+      return message.error('Oops, please try again!', 3);
+    }
+    return message.error("Name can't be blank...", 3);
   };
 
   return (
