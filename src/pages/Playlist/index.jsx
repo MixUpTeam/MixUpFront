@@ -148,14 +148,27 @@ const Playlist = () => {
           </form>
         </div>
         <p>This is the detail page of a playlist</p>
-        {tracklist &&
+
+        {spotifyDetails &&
           tracklist
             .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
             .sort((a, b) => b.score - a.score)
             .map((track) => (
               <Card key={ShortID.generate()} style={{ width: 300 }}>
-                <p>{track.track_spotify_id}</p>
-                <p>{track.score}</p>
+                <p>
+                  {
+                    spotifyDetails.find(
+                      (el) => track.track_spotify_id === el.id
+                    ).name
+                  }{" "}
+                  (by{" "}
+                  {
+                    spotifyDetails.find(
+                      (el) => track.track_spotify_id === el.id
+                    ).artists[0].name
+                  }
+                  )
+                </p>
                 <LikeOutlined onClick={() => Likes(track)} />
                 <LikeOutlined rotate={180} onClick={() => Dislikes(track)} />
               </Card>
