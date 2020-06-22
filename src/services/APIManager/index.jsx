@@ -62,9 +62,14 @@ export default class APIManager {
     return res.data;
   }
 
-  static async downVote(track_playlist_id) {
+  static async downVote(track_playlist_id, user_id) {
     const res = await API.post(
-      `api/v1/track_playlists/${track_playlist_id}/down_vote`
+      `api/v1/track_playlists/${track_playlist_id}/down_vote`,
+      {
+        track_playlist: {
+          voted_by_id: user_id,
+        },
+      }
     );
     return res.data;
   }
