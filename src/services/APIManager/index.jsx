@@ -20,8 +20,26 @@ API.interceptors.request.use(
 );
 
 export default class APIManager {
+  static async registerUser(userInput) {
+    const res = await API.post('users.json', userInput);
+    return res;
+  }
+
+  static async connectUser(userInput) {
+    const res = await API.post('users/sign_in.json', userInput);
+    return res;
+  }
+
+  static async disconnectUser() {
+    const res = await API.delete('users/sign_out.json');
+    return res;
+  }
+
   static async createPlaylist(userId, name) {
-    const res = await API.post('api/v1/playlists', { owner_id: userId, name });
+    const res = await API.post('api/v1/playlists', {
+      owner_id: userId,
+      name,
+    });
     return res.data;
   }
 
