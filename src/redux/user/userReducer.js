@@ -1,7 +1,11 @@
 import { PROFILE, REMOVE_PROFILE } from 'redux/user/userType';
+import Cookies from 'js-cookie';
+import { cookieName } from '../../constants';
 
 const initialState = {
-  data: {},
+  data: Cookies.get(cookieName)
+    ? JSON.parse(Cookies.get(cookieName)).userInfo
+    : {},
 };
 
 const userReducer = (state = initialState, action) => {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './styles.scss';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -21,11 +22,12 @@ const NewPlaylist = () => {
   const history = useHistory();
   const classes = useStyles();
   const [input, setInput] = useState();
+  const userId = useSelector((state) => state.user.data.id);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (input) {
-      const res = await APIManager.createPlaylist(1, input);
+      const res = await APIManager.createPlaylist(userId, input);
       console.log(res);
       if (res.status === 'success') return history.push(`/playlist/${res.id}`);
       return message.error('Oops, please try again!', 3);

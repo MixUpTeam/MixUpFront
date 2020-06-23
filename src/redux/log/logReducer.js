@@ -1,20 +1,23 @@
 import { CONNECTION, DISCONNECTION } from 'redux/log/logType';
+import Cookies from 'js-cookie';
+import { cookieName } from '../../constants';
 
 const initialState = {
-  log: false,
+  user_connected: !!Cookies.get(cookieName),
 };
 
 const logReducer = (state = initialState, action) => {
   switch (action.type) {
     case CONNECTION:
+      console.log(JSON.parse(Cookies.get(cookieName)));
       return {
         ...state,
-        log: true,
+        user_connected: true,
       };
     case DISCONNECTION:
       return {
         ...state,
-        log: false,
+        user_connected: false,
       };
     default:
       return state;

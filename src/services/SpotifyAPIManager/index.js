@@ -11,7 +11,7 @@ API.interceptors.request.use(
       ...headers,
       'Content-Type': 'application/json',
       Authorization:
-        'Bearer BQAV0tHF34giiFE6a_kfvOTayfeQVgXPTBcLVCXSwo8gGsCwG97BlzkOiQtA1zEUfZbZ0qJKnEs0m5TZwqh4HF4tcNBP9NsBZdlw9e0MVIAPO5rrHGFg6cEcVHTIEio3pWGzAyz_7w9r0hX4mDdN-9oy4MiwSug6OUfFwwAlA5gsh0MZXzylfTwqxRqrsmN1LAGTumRCTeuDJpgnMvifDktmlBr-aKWOgd38GUl8jH-tJZ0Cgx1v09zzkhA7Zcli8lspEukPn1MXhOo',
+        'Bearer BQAll2nT8cmOgQ4Qj-FhvAsYFHxPqIYlgCKsjuxKtquIBqiHtFUZy3iZyUZDefL1oorrYsp2ocsNY44t2JI',
     },
   }),
   (error) => {
