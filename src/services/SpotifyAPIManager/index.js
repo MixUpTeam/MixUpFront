@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 
 const API = axios.create({
-  baseURL: "https://api.spotify.com/v1/",
+  baseURL: 'https://api.spotify.com/v1/',
 });
 
 API.interceptors.request.use(
@@ -9,9 +9,9 @@ API.interceptors.request.use(
     ...config,
     headers: {
       ...headers,
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization:
-        "Bearer BQDsj83XpV7pOMaiZSFRzdDdswBiPbWHU0ZM2huyeuW3lkWtdaVYnxkKsku0iKxbqidIz1kbDLxLsy5Pc4h0WIOYmpEivmr0VWuopd16zwIs0u-j10RRDcQEzLKIAQRW5F1eDuQud6M_MBSjfuPeDBV45Lw3fws7mLr87eNlh4nKuGtXArTqesQ209jidPBvCFjgOMe1deKq1SMVtPHGaGNGwrVMcQh8xjAeJhBGF_UDfw8VlGxmYFYvtuBpuKczk-WKH9LmH3FPdnE",
+        'Bearer BQAV0tHF34giiFE6a_kfvOTayfeQVgXPTBcLVCXSwo8gGsCwG97BlzkOiQtA1zEUfZbZ0qJKnEs0m5TZwqh4HF4tcNBP9NsBZdlw9e0MVIAPO5rrHGFg6cEcVHTIEio3pWGzAyz_7w9r0hX4mDdN-9oy4MiwSug6OUfFwwAlA5gsh0MZXzylfTwqxRqrsmN1LAGTumRCTeuDJpgnMvifDktmlBr-aKWOgd38GUl8jH-tJZ0Cgx1v09zzkhA7Zcli8lspEukPn1MXhOo',
     },
   }),
   (error) => {
@@ -22,8 +22,8 @@ API.interceptors.request.use(
 export default class SpotifyAPIManager {
   static async getTrackById(tracks) {
     const ids = tracks.map((e) => e.track_spotify_id);
-    console.log(ids.join(","));
-    const res = await API.get(`tracks/?ids=${ids.join(",")}`);
+    console.log(ids.join(','));
+    const res = await API.get(`tracks/?ids=${ids.join(',')}`);
     return res.data;
   }
 
