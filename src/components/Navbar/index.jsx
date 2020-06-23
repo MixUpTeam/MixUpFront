@@ -4,49 +4,41 @@ import { useLocation, NavLink, Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 
-import { Menu, Button } from 'antd';
+import { Menu, Button, message } from 'antd';
 import {
   UserOutlined,
   MailOutlined,
   AppstoreOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
+import APIManager from 'services/APIManager';
+import { cookieName } from '../../constants';
 
 import { removeConnection, removeProfile } from '../../redux';
 
 import './styles.scss';
 
-const { SubMenu } = Menu;
-
 const Navbar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const logStatus = useSelector((state) => state.log.log);
+  const logStatus = useSelector((state) => state.log.user_connected);
   const location = useLocation();
-  console.log(location.pathname);
 
   const disconnection = () => {
-    const token = JSON.parse(Cookies.get('token')).jwt;
-    fetch('https://form-you-back.herokuapp.com/users/sign_out.json', {
-      method: 'delete',
-      headers: {
-        Authorization: token,
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        if (response.statusText === 'No Content') {
-          dispatch(removeConnection());
-          dispatch(removeProfile());
-          Cookies.remove('token');
-          history.push('/');
-        } else response.json();
-      })
-      .catch((error) => console.error(error));
-  };
-
-  const handleClick = (e) => {
-    console.log('click', e);
+    const sendDisconnectRequest = async () => {
+      try {
+        await APIManager.disconnectUser();
+        Cookies.remove(cookieName);
+        dispatch(removeConnection());
+        dispatch(removeProfile());
+        history.push('/');
+        message.success('As you wish, but come back soon ^.^', 3);
+      } catch (error) {
+        message.error('An error occurred, please retry.', 3);
+        console.error(error);
+      }
+    };
+    sendDisconnectRequest();
   };
 
   return (
@@ -55,7 +47,6 @@ const Navbar = () => {
         <Menu
           key="menu1"
           mode="horizontal"
-          onClick={handleClick}
           theme="dark"
           className={location.pathname === '/' ? 'homeNavbar' : null}
         >
@@ -90,22 +81,11 @@ const Navbar = () => {
               </Button>
             </Menu.Item>
           ) : (
-            <SubMenu
-              icon={<UserOutlined />}
-              title="Login"
-              key="sub1"
-              onClick={handleClick}
-            >
-              <Menu.Item key="1" icon={<AppstoreOutlined />}>
-                <Link to="xxxxxxxx">XXXXXXXX</Link>
-              </Menu.Item>
-              <Menu.Item key="2" icon={<AppstoreOutlined />}>
-                <Link to="xxxxxxxx">XXXXXXXX</Link>
-              </Menu.Item>
-              <Menu.Item key="3" icon={<AppstoreOutlined />}>
-                <Link to="xxxxxxxx">XXXXXXXX</Link>
-              </Menu.Item>
-            </SubMenu>
+            <Menu.Item key="1" icon={<UserOutlined />}>
+              <NavLink to="/login" activeClassName="active">
+                Connection
+              </NavLink>
+            </Menu.Item>
           )}
 
           <Menu.Item key="10">
@@ -114,7 +94,7 @@ const Navbar = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              AntDesign (get quick antdesign access ;) )
+              AntDesign (get quick antdesign access ;)
             </a>
           </Menu.Item>
         </Menu>
