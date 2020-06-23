@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
-import './styles.scss';
+import { useSelector, useDispatch } from 'react-redux';
 import APIManager from 'services/APIManager';
-import { makeStyles } from '@material-ui/core/styles';
+import ShortID from 'shortid';
+import './styles.scss';
 
+import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import { message, Card } from 'antd';
 import { LikeOutlined } from '@ant-design/icons';
 
-import Likes from 'tools/Likes';
-import Dislikes from 'tools/Dislikes';
-
-import ShortID from 'shortid';
+import { setTracks } from '../../redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,13 +25,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Playlist = () => {
-  const userId = 1;
+  const userId = 1; // curent_user
   const classes = useStyles();
   const { playlistId } = useParams();
-
+  const dispatch = useDispatch();
+  const tracklist = useSelector((state) => state.tracks.tracks);
   const [userTrackChoice, setUserTrackChoice] = useState(null);
-  const [playlist, setPlaylist] = useState('');
-  const [tracks, setTracks] = useState('');
 
   const tempFakeSuggestions = [
     {
@@ -53,35 +50,50 @@ const Playlist = () => {
     },
   ];
 
+  const setTrackPlaylist = (data) => {
+    dispatch(setTracks(data));
+  };
+
   useEffect(() => {
     const fetchPlaylist = async () => {
-      console.log('fetchPlaylist -> playlistId', playlistId);
       const res = await APIManager.showPlaylist(playlistId);
-      setPlaylist(res);
-      setTracks(res.entries);
+      if (res.entries.length !== 0) setTrackPlaylist(res.entries);
+      else message.success('This is a fresh playlist', 3);
     };
     fetchPlaylist();
   }, [playlistId]);
 
+  const Likes = async (track) => {
+    const res = await APIManager.upVote(track.id, 6); // curent_user
+    const playlist = await APIManager.showPlaylist(res.playlist_id);
+    if (playlist.status === 'success') setTrackPlaylist(playlist.entries);
+  };
+
+  const Dislikes = async (track) => {
+    const res = await APIManager.downVote(track.id, 6); // curent_user
+    const playlist = await APIManager.showPlaylist(res.playlist_id);
+    if (playlist.status === 'success') setTrackPlaylist(playlist.entries);
+  };
+
   const searchBarOnSubmit = async (e) => {
     e.preventDefault();
-    console.log('searchBarOnSubmit -> userId', userId);
-    console.log('searchBarOnSubmit -> userTrackChoice', userTrackChoice);
-    console.log('searchBarOnSubmit -> playlistId', playlistId);
 
-    if (!userTrackChoice) return message.error('Please choose a track');
+    if (!userTrackChoice) message.error('Please choose a track');
     const res = await APIManager.addTrackToPlaylist(
       userId,
       userTrackChoice,
       playlistId
     );
-    if (res.status === 'error') return message.error(res.messages[0]);
-    setTracks([...tracks, res]);
+
+    if (res.status === 'error') message.error(res.messages[0]);
+
+    const playlist = await APIManager.showPlaylist(res.playlist_id);
+    if (playlist.status === 'success') setTrackPlaylist(playlist.entries);
   };
 
   const inputOnChange = (e, values) => {
     const selectedTrack = values.id;
-    setUserTrackChoice(selectedTrack);
+    if (selectedTrack) setUserTrackChoice(selectedTrack);
   };
 
   return (
@@ -120,20 +132,16 @@ const Playlist = () => {
           </form>
         </div>
         <p>This is the detail page of a playlist</p>
-        <p>{playlist.name}</p>
-        {tracks &&
-          tracks
+        {tracklist &&
+          tracklist
             .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
             .sort((a, b) => b.score - a.score)
             .map((track) => (
               <Card key={ShortID.generate()} style={{ width: 300 }}>
                 <p>{track.track_spotify_id}</p>
                 <p>{track.score}</p>
-                <LikeOutlined onClick={() => Likes(track.id, 5)} />
-                <LikeOutlined
-                  rotate={180}
-                  onClick={() => Dislikes(track.id, 5)}
-                />
+                <LikeOutlined onClick={() => Likes(track)} />
+                <LikeOutlined rotate={180} onClick={() => Dislikes(track)} />
               </Card>
             ))}
       </div>
