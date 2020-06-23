@@ -5,6 +5,9 @@ import { useDispatch } from 'react-redux';
 import { Form, Input, Button, message } from 'antd';
 import Cookies from 'js-cookie';
 
+import APIManager from 'services/APIManager';
+import { cookieName } from '../../constants';
+
 import { setConnection, setProfile } from '../../redux';
 
 const layout = {
@@ -15,6 +18,7 @@ const layout = {
     span: 16,
   },
 };
+
 const tailLayout = {
   wrapperCol: {
     offset: 4,
@@ -26,47 +30,36 @@ const LogIn = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const Connection = ({ email, password }) => {
-    const data = {
-      email,
-      password,
+  const Connection = (userInput) => {
+    const sendConnectionRequest = async () => {
+      try {
+        const res = await APIManager.connectUser({
+          user: { ...userInput },
+        });
+        Cookies.set(
+          cookieName,
+          {
+            token: res.headers.authorization,
+            userInfo: res.data,
+          },
+          { expires: 6 }
+        );
+        dispatch(setConnection());
+        dispatch(setProfile(res.data));
+        history.push('/new-playlist');
+      } catch (error) {
+        message.error(
+          'An error occurred, please verify input format and retry.',
+          3
+        );
+        console.error(error);
+      }
     };
-
-    fetch('https://form-you-back.herokuapp.com/users/sign_in.json', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) =>
-        response.json().then((user) => ({
-          jwt: response.headers.get('Authorization'),
-          user,
-        }))
-      )
-      .then((result) => {
-        console.log(result);
-        if (!result.jwt) {
-          message.error('Check your logs', 3);
-        } else {
-          message.success('Profile well login', 3);
-          Cookies.set('token', { jwt: result.jwt }, { expires: 7 });
-          dispatch(setConnection());
-          dispatch(setProfile(result));
-          history.push('/');
-        }
-      })
-      .catch((error) => console.error(error));
+    sendConnectionRequest();
   };
 
   const onFinish = (values) => {
-    console.log('Success:', values);
     Connection(values);
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.error('Failed:', errorInfo);
   };
 
   return (
@@ -78,7 +71,6 @@ const LogIn = () => {
           remember: true,
         }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
       >
         <Form.Item
           label="Email"
@@ -86,7 +78,7 @@ const LogIn = () => {
           rules={[
             {
               required: true,
-              message: 'Please input your email!',
+              message: 'Please provide an email.',
             },
           ]}
         >
@@ -99,7 +91,7 @@ const LogIn = () => {
           rules={[
             {
               required: true,
-              message: 'Please input your password!',
+              message: 'Please provide a password!',
             },
           ]}
         >
@@ -108,7 +100,7 @@ const LogIn = () => {
 
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
-            Submit
+            Connect
           </Button>
         </Form.Item>
       </Form>
