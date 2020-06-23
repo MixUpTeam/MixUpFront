@@ -28,10 +28,10 @@ const Navbar = () => {
     const sendDisconnectRequest = async () => {
       try {
         await APIManager.disconnectUser();
+        history.push('/');
         Cookies.remove(cookieName);
         dispatch(removeConnection());
         dispatch(removeProfile());
-        history.push('/');
         message.success('As you wish, but come back soon ^.^', 3);
       } catch (error) {
         console.error(error);
