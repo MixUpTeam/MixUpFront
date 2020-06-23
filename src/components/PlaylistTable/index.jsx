@@ -67,15 +67,20 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
   const rows = [];
   spotifyDetails &&
     spotifyDetails.length < 41 &&
-    tracklist.map((p) => {
-      const title = spotifyDetails.find((el) => p.track_spotify_id === el.id)
-        .name;
+    tracklist
+      .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+      .sort((a, b) => b.score - a.score)
+      .map((p) => {
+        const title = spotifyDetails.find((el) => p.track_spotify_id === el.id)
+          .name;
 
-      const artist = spotifyDetails.find((el) => p.track_spotify_id === el.id)
-        .artists[0].name;
+        const artist = spotifyDetails.find((el) => p.track_spotify_id === el.id)
+          .artists[0].name;
 
-      rows.push(createData(title, artist, p.score, p.added_by.username, p.id));
-    });
+        rows.push(
+          createData(title, artist, p.score, p.added_by.username, p.id)
+        );
+      });
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
