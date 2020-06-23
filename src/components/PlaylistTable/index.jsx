@@ -19,6 +19,7 @@ import { setTracks } from '../../redux';
 const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
   const dispatch = useDispatch();
   const tracklist = useSelector((state) => state.tracks.tracks);
+  const userId = useSelector((state) => state.user.data.id);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const useStyles = makeStyles({
@@ -36,13 +37,13 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
   };
 
   const Likes = async (track) => {
-    const res = await APIManager.upVote(track.id, 6); // curent_user
+    const res = await APIManager.upVote(track.id, userId);
     const playlist = await APIManager.showPlaylist(res.playlist_id);
     if (playlist.status === 'success') setTrackPlaylist(playlist.entries);
   };
 
   const Dislikes = async (track) => {
-    const res = await APIManager.downVote(track.id, 6); // curent_user
+    const res = await APIManager.downVote(track.id, userId);
     const playlist = await APIManager.showPlaylist(res.playlist_id);
     if (playlist.status === 'success') setTrackPlaylist(playlist.entries);
   };
