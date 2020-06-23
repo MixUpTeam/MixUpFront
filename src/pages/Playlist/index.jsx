@@ -65,7 +65,6 @@ const Playlist = () => {
   useEffect(() => {
     const fetchTracks = async () => {
       const res = await SpotifyAPIManager.getTrackById(tracklist);
-      console.log(res.tracks);
       setSpotifyDetails(res.tracks);
     };
     if (tracklist[0]) fetchTracks();
@@ -73,25 +72,19 @@ const Playlist = () => {
 
   const searchBarOnSubmit = async (e) => {
     e.preventDefault();
-    console.log("searchBarOnSubmit -> userId", userId);
-    console.log("searchBarOnSubmit -> userTrackChoice", userTrackChoice);
-    console.log("searchBarOnSubmit -> playlistId", playlistId);
-    console.log(userTrackChoice);
-    console.log(spotifyDetails);
     if (!userTrackChoice) return message.error("Please choose a track");
     const res = await APIManager.addTrackToPlaylist(
       userId,
-      userTrackChoice,
+      userTrackChoice.id,
       playlistId
     );
-    const playlist = await APIManager.showPlaylist(res.playlist_id);
-    if (res.status === "error") return message.error(res.messages[0]);
     setSpotifyDetails([...spotifyDetails, userTrackChoice]);
-    setTrackPlaylist(playlist.entries);
+    const playlist = await APIManager.showPlaylist(res.playlist_id);
+    if (playlist.status === "success") setTrackPlaylist(playlist.entries);
   };
 
   const inputOnChange = (e, values) => {
-    const selectedTrack = values.id;
+    const selectedTrack = values;
     if (selectedTrack) setUserTrackChoice(selectedTrack);
   };
 
@@ -99,7 +92,6 @@ const Playlist = () => {
     const inputSearch = e.target.value;
     if (inputSearch) {
       const res = await SpotifyAPIManager.searchTrackByQuery(inputSearch);
-      console.log(res.tracks.items);
       setSuggestions(res.tracks.items);
     } else setSuggestions([]);
   };
@@ -164,6 +156,7 @@ const Playlist = () => {
                   }
                   )
                 </p>
+                <p>{track.score}</p>
                 <LikeOutlined onClick={() => Likes(track)} />
                 <LikeOutlined rotate={180} onClick={() => Dislikes(track)} />
               </Card>
