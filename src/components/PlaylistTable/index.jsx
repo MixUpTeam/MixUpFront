@@ -10,8 +10,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Checkbox from '@material-ui/core/Checkbox';
-import { LikeOutlined } from '@ant-design/icons';
+import MusicNoteOutlinedIcon from '@material-ui/icons/MusicNoteOutlined';
+import MusicOffOutlinedIcon from '@material-ui/icons/MusicOffOutlined';
 
 const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
   const tracklist = useSelector((state) => state.tracks.tracks);
@@ -86,10 +86,10 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
                 </TableCell>
               ))}
               <TableCell>
-                <LikeOutlined />
+                <MusicNoteOutlinedIcon />
               </TableCell>
               <TableCell>
-                <LikeOutlined rotate={180} />
+                <MusicOffOutlinedIcon />
               </TableCell>
             </TableRow>
           </TableHead>
@@ -115,11 +115,11 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
                           </TableCell>
                         );
                       })}
-                      <TableCell padding="checkbox">
-                        <Checkbox checked="isItemSelected" inputProps="" />
+                      <TableCell>
+                        <MusicNoteOutlinedIcon />
                       </TableCell>
-                      <TableCell padding="checkbox">
-                        <Checkbox checked="isItemSelected" inputProps="" />
+                      <TableCell>
+                        <MusicOffOutlinedIcon />
                       </TableCell>
                     </TableRow>
                   );
