@@ -47,6 +47,7 @@ const LogIn = () => {
         dispatch(setConnection());
         dispatch(setProfile(res.data));
         history.push('/new-playlist');
+        message.success('Hey there, welcome back!', 3);
       } catch (error) {
         message.error(
           'An error occurred, please verify input format and retry.',

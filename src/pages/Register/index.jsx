@@ -45,6 +45,7 @@ const Register = () => {
         dispatch(setConnection());
         dispatch(setProfile(res.data));
         history.push('/new-playlist');
+        message.success('Hey there, welcome to MixUp!', 3);
       } catch (error) {
         message.error(
           'An error occurred, please verify input format and retry.',
