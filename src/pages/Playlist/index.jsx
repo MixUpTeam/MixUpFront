@@ -33,26 +33,8 @@ const Playlist = () => {
   const tracklist = useSelector((state) => state.tracks.tracks);
   const [userTrackChoice, setUserTrackChoice] = useState(null);
   const [playlist, setPlaylist] = useState("");
-  const [tracks, setTracks] = useState(null);
   const [spotifyDetails, setSpotifyDetails] = useState();
-
-  const tempFakeSuggestions = [
-    {
-      id: "this is the first choice",
-    },
-    {
-      id: "second choice is this",
-    },
-    {
-      id: "yet here is a third one",
-    },
-    {
-      id: "about time to have a fourth",
-    },
-    {
-      id: "be careful, fifth coming",
-    },
-  ];
+  const [suggestions, setSuggestions] = useState([]);
 
   const setTrackPlaylist = (data) => {
     dispatch(setTracks(data));
@@ -82,19 +64,20 @@ const Playlist = () => {
 
   useEffect(() => {
     const fetchTracks = async () => {
-      const res = await SpotifyAPIManager.getTrackById(tracks);
+      const res = await SpotifyAPIManager.getTrackById(tracklist);
       console.log(res.tracks);
       setSpotifyDetails(res.tracks);
     };
-    if (tracks) fetchTracks();
-  }, [tracks]);
+    if (tracklist[0]) fetchTracks();
+  }, [tracklist]);
 
   const searchBarOnSubmit = async (e) => {
     e.preventDefault();
     console.log("searchBarOnSubmit -> userId", userId);
     console.log("searchBarOnSubmit -> userTrackChoice", userTrackChoice);
     console.log("searchBarOnSubmit -> playlistId", playlistId);
-
+    console.log(userTrackChoice);
+    console.log(spotifyDetails);
     if (!userTrackChoice) return message.error("Please choose a track");
     const res = await APIManager.addTrackToPlaylist(
       userId,
@@ -103,13 +86,22 @@ const Playlist = () => {
     );
     const playlist = await APIManager.showPlaylist(res.playlist_id);
     if (res.status === "error") return message.error(res.messages[0]);
-    setTracks([...tracks, res]);
+    setSpotifyDetails([...spotifyDetails, userTrackChoice]);
     setTrackPlaylist(playlist.entries);
   };
 
   const inputOnChange = (e, values) => {
     const selectedTrack = values.id;
     if (selectedTrack) setUserTrackChoice(selectedTrack);
+  };
+
+  const handleChange = async (e) => {
+    const inputSearch = e.target.value;
+    if (inputSearch) {
+      const res = await SpotifyAPIManager.searchTrackByQuery(inputSearch);
+      console.log(res.tracks.items);
+      setSuggestions(res.tracks.items);
+    } else setSuggestions([]);
   };
 
   return (
@@ -124,8 +116,10 @@ const Playlist = () => {
           >
             <Autocomplete
               id="suggestion-list"
-              options={tempFakeSuggestions}
-              getOptionLabel={(option) => option.id}
+              options={suggestions}
+              getOptionLabel={(option) =>
+                `${option.name} - ${option.artists[0].name}`
+              }
               style={{ width: "100%" }}
               onChange={inputOnChange}
               renderInput={(params) => (
@@ -134,6 +128,7 @@ const Playlist = () => {
                   variant="outlined"
                   id="trach-search-input"
                   label="name a track here"
+                  onChange={(e) => handleChange(e)}
                 />
               )}
             />
