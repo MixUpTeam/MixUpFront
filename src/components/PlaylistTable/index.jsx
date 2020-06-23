@@ -1,5 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import APIManager from 'services/APIManager';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -13,11 +14,38 @@ import TableRow from '@material-ui/core/TableRow';
 import MusicNoteOutlinedIcon from '@material-ui/icons/MusicNoteOutlined';
 import MusicOffOutlinedIcon from '@material-ui/icons/MusicOffOutlined';
 
+import { setTracks } from '../../redux';
+
 const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
+  const dispatch = useDispatch();
   const tracklist = useSelector((state) => state.tracks.tracks);
-  console.log('PlaylistTable -> tracklist', tracklist);
-  console.log('tabletracks -> tabletracks', spotifyDetails);
-  console.log('tabletracks -> typeoftabletracks', typeof spotifyDetails);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const useStyles = makeStyles({
+    root: {
+      width: '100%',
+    },
+    container: {
+      maxHeight: 440,
+    },
+  });
+  const classes = useStyles();
+
+  const setTrackPlaylist = (data) => {
+    dispatch(setTracks(data));
+  };
+
+  const Likes = async (track) => {
+    const res = await APIManager.upVote(track.id, 6); // curent_user
+    const playlist = await APIManager.showPlaylist(res.playlist_id);
+    if (playlist.status === 'success') setTrackPlaylist(playlist.entries);
+  };
+
+  const Dislikes = async (track) => {
+    const res = await APIManager.downVote(track.id, 6); // curent_user
+    const playlist = await APIManager.showPlaylist(res.playlist_id);
+    if (playlist.status === 'success') setTrackPlaylist(playlist.entries);
+  };
 
   const columns = [
     { id: 'title', label: 'Title', minWidth: 170 },
@@ -26,12 +54,13 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
     { id: 'score', label: 'Score', minWidth: 170 },
   ];
 
-  const createData = (title, artist, score, added_by) => {
+  const createData = (title, artist, score, added_by, id) => {
     return {
       title,
       artist,
       score,
       added_by,
+      id,
     };
   };
 
@@ -45,21 +74,8 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
       const artist = spotifyDetails.find((el) => p.track_spotify_id === el.id)
         .artists[0].name;
 
-      rows.push(createData(title, artist, p.score, p.added_by.username));
+      rows.push(createData(title, artist, p.score, p.added_by.username, p.id));
     });
-
-  const useStyles = makeStyles({
-    root: {
-      width: '100%',
-    },
-    container: {
-      maxHeight: 440,
-    },
-  });
-
-  const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -116,10 +132,10 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
                         );
                       })}
                       <TableCell>
-                        <MusicNoteOutlinedIcon />
+                        <MusicNoteOutlinedIcon onClick={() => Likes(row)} />
                       </TableCell>
                       <TableCell>
-                        <MusicOffOutlinedIcon />
+                        <MusicOffOutlinedIcon onClick={() => Dislikes(row)} />
                       </TableCell>
                     </TableRow>
                   );
