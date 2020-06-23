@@ -11,7 +11,7 @@ API.interceptors.request.use(
       ...headers,
       'Content-Type': 'application/json',
       Authorization:
-        'Bearer BQAll2nT8cmOgQ4Qj-FhvAsYFHxPqIYlgCKsjuxKtquIBqiHtFUZy3iZyUZDefL1oorrYsp2ocsNY44t2JI',
+        'Bearer BQCzCATqJ0MkZyTu8IVHWfSXFHbdqbRoVuN-DTv66wjlzD-Z-2EfANIuZqSkuckhltBfgsxG_8VesUm1tAY',
     },
   }),
   (error) => {
@@ -22,13 +22,12 @@ API.interceptors.request.use(
 export default class SpotifyAPIManager {
   static async getTrackById(tracks) {
     const ids = tracks.map((e) => e.track_spotify_id);
-    console.log(ids.join(','));
     const res = await API.get(`tracks/?ids=${ids.join(',')}`);
-    return res.data;
+    return res;
   }
 
   static async searchTrackByQuery(query) {
     const res = await API.get(`search?q=${query}&type=track&limit=5`);
-    return res.data;
+    return res;
   }
 }
