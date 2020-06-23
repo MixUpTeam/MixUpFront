@@ -49,11 +49,11 @@ const LogIn = () => {
         history.push('/new-playlist');
         message.success('Hey there, welcome back!', 3);
       } catch (error) {
-        message.error(
-          'An error occurred, please verify input format and retry.',
+        console.error(error);
+        return message.error(
+          'An error occurred, please verify your email/password and retry.',
           3
         );
-        console.error(error);
       }
     };
     sendConnectionRequest();

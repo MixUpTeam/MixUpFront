@@ -34,8 +34,8 @@ const Navbar = () => {
         history.push('/');
         message.success('As you wish, but come back soon ^.^', 3);
       } catch (error) {
-        message.error('An error occurred, please retry.', 3);
         console.error(error);
+        return message.error('An error occurred, please retry.', 3);
       }
     };
     sendDisconnectRequest();
