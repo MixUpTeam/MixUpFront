@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import APIManager from 'services/APIManager';
 import SpotifyAPIManager from 'services/SpotifyAPIManager';
-import ShortID from 'shortid';
 import './styles.scss';
 
 import PlaylistTable from 'components/PlaylistTable';
@@ -12,8 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
-import { message, Card } from 'antd';
-import { LikeOutlined } from '@ant-design/icons';
+import { message } from 'antd';
 
 import { setTracks } from '../../redux';
 
@@ -44,25 +42,12 @@ const Playlist = () => {
 
   useEffect(() => {
     const fetchPlaylist = async () => {
-      console.log('fetchPlaylist -> playlistId', playlistId);
       const res = await APIManager.showPlaylist(playlistId);
       if (res.entries.length !== 0) setTrackPlaylist(res.entries);
       else message.success('This is a fresh playlist', 3);
     };
     fetchPlaylist();
   }, [playlistId]);
-
-  const Likes = async (track) => {
-    const res = await APIManager.upVote(track.id, 6); // curent_user
-    const playlist = await APIManager.showPlaylist(res.playlist_id);
-    if (playlist.status === 'success') setTrackPlaylist(playlist.entries);
-  };
-
-  const Dislikes = async (track) => {
-    const res = await APIManager.downVote(track.id, 6); // curent_user
-    const playlist = await APIManager.showPlaylist(res.playlist_id);
-    if (playlist.status === 'success') setTrackPlaylist(playlist.entries);
-  };
 
   useEffect(() => {
     const fetchTracks = async () => {
@@ -137,32 +122,6 @@ const Playlist = () => {
           </form>
         </div>
         <p>This is the detail page of a playlist</p>
-
-        {spotifyDetails &&
-          tracklist
-            .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
-            .sort((a, b) => b.score - a.score)
-            .map((track) => (
-              <Card key={ShortID.generate()} style={{ width: 300 }}>
-                <p>
-                  {
-                    spotifyDetails.find(
-                      (el) => track.track_spotify_id === el.id
-                    ).name
-                  }{' '}
-                  (by{' '}
-                  {
-                    spotifyDetails.find(
-                      (el) => track.track_spotify_id === el.id
-                    ).artists[0].name
-                  }
-                  )
-                </p>
-                <p>{track.score}</p>
-                <LikeOutlined onClick={() => Likes(track)} />
-                <LikeOutlined rotate={180} onClick={() => Dislikes(track)} />
-              </Card>
-            ))}
         <PlaylistTable spotifyDetails={spotifyDetails} />
       </div>
     </>
