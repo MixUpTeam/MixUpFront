@@ -14,6 +14,7 @@ import TableRow from '@material-ui/core/TableRow';
 import MusicNoteOutlinedIcon from '@material-ui/icons/MusicNoteOutlined';
 import MusicOffOutlinedIcon from '@material-ui/icons/MusicOffOutlined';
 
+import { message } from 'antd';
 import { setTracks } from '../../redux';
 
 const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
@@ -39,13 +40,21 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
   const Likes = async (track) => {
     const res = await APIManager.upVote(track.id, userId);
     const playlist = await APIManager.showPlaylist(res.playlist_id);
-    if (playlist.status === 'success') setTrackPlaylist(playlist.entries);
+    if (playlist.status === 'success') {
+      setTrackPlaylist(playlist.entries);
+    } else {
+      return message.error(playlist.messages[0], 3);
+    }
   };
 
   const Dislikes = async (track) => {
     const res = await APIManager.downVote(track.id, userId);
     const playlist = await APIManager.showPlaylist(res.playlist_id);
-    if (playlist.status === 'success') setTrackPlaylist(playlist.entries);
+    if (playlist.status === 'success') {
+      setTrackPlaylist(playlist.entries);
+    } else {
+      return message.error(playlist.messages[0], 3);
+    }
   };
 
   const columns = [
