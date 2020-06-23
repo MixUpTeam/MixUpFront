@@ -1,10 +1,11 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
+import { message } from 'antd';
 
 import { useSelector } from 'react-redux';
 
 const AuthRoute = ({ component: Component, ...rest }: AuthRoute) => {
-  const logStatus = useSelector((state) => state.log.log);
+  const logStatus = useSelector((state) => state.log.user_connected);
 
   return (
     <>
@@ -14,7 +15,10 @@ const AuthRoute = ({ component: Component, ...rest }: AuthRoute) => {
           logStatus ? (
             <Component {...props} />
           ) : (
-            <p>This is a private page, go log in please.</p>
+            <div>
+              <Redirect to={{ pathname: '/login' }} />
+              {message.warning('Please log in to continue.', 3)}
+            </div>
           )
         }
       />

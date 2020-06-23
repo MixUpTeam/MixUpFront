@@ -22,13 +22,15 @@ const App = () => {
           <Navbar />
 
           <Switch>
-            <Route exact path="/new-playlist" component={NewPlaylist} />
-            {/* PrivateRoute */}
+            <Authroute exact path="/new-playlist" component={NewPlaylist} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/about" component={About} />
-            {/* this is a temporary link to see playlist page */}
-            <Route exact path="/playlist/:playlistId" component={Playlist} />
+            <Authroute
+              exact
+              path="/playlist/:playlistId"
+              component={Playlist}
+            />
             <Authroute exact path="/profile" component={Profile} />
             <Home exact path="/" component={Home} />
             <Route path="*" component={NotFound} status={404} />
