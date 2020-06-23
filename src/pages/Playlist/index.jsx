@@ -34,7 +34,7 @@ const Playlist = () => {
   const tracklist = useSelector((state) => state.tracks.tracks);
   const [userTrackChoice, setUserTrackChoice] = useState(null);
   const [playlist, setPlaylist] = useState('');
-  const [spotifyDetails, setSpotifyDetails] = useState();
+  const [spotifyDetails, setSpotifyDetails] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
   const setTrackPlaylist = (data) => {
@@ -127,7 +127,7 @@ const Playlist = () => {
         </div>
         <ShareButton />
         <p>This is the detail page of a playlist</p>
-        <PlaylistTable spotifyDetails={spotifyDetails} />
+        {spotifyDetails[0] && <PlaylistTable spotifyDetails={spotifyDetails} />}
       </div>
     </>
   );
