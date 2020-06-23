@@ -6,6 +6,7 @@ import SpotifyAPIManager from "services/SpotifyAPIManager";
 import "./styles.scss";
 
 import PlaylistTable from "components/PlaylistTable";
+import ShareButton from "components/ShareButton";
 
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -124,6 +125,7 @@ const Playlist = () => {
             </Button>
           </form>
         </div>
+        <ShareButton />
         <p>This is the detail page of a playlist</p>
         <PlaylistTable spotifyDetails={spotifyDetails} />
       </div>
