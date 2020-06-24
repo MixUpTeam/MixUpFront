@@ -47,11 +47,11 @@ const Register = () => {
         history.push('/new-playlist');
         message.success('Hey there, welcome to MixUp!', 3);
       } catch (error) {
-        message.error(
-          'An error occurred, please verify input format and retry.',
+        console.error(error);
+        return message.error(
+          'An error occurred. The email might already has a MixUp account.',
           3
         );
-        console.error(error);
       }
     };
     sendRegistrationRequest();

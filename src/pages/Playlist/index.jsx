@@ -33,7 +33,6 @@ const Playlist = () => {
   const dispatch = useDispatch();
   const tracklist = useSelector((state) => state.tracks.tracks);
   const [userTrackChoice, setUserTrackChoice] = useState(null);
-  const [playlist, setPlaylist] = useState('');
   const [spotifyDetails, setSpotifyDetails] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
@@ -45,16 +44,34 @@ const Playlist = () => {
     setTrackPlaylist([]);
     const fetchPlaylist = async () => {
       const res = await APIManager.showPlaylist(playlistId);
-      if (res.entries.length !== 0) setTrackPlaylist(res.entries);
-      else message.success('This is a fresh playlist', 3);
+      if (res.status === 'success') {
+        if (res.entries[0]) {
+          setTrackPlaylist(res.entries);
+        } else {
+          return message.success(
+            'This is a fresh playlist, add some sounds!',
+            3
+          );
+        }
+      } else {
+        return message.error(res.messages[0], 3);
+      }
     };
     fetchPlaylist();
   }, [playlistId]);
 
   useEffect(() => {
     const fetchTracks = async () => {
-      const res = await SpotifyAPIManager.getTrackById(tracklist);
-      setSpotifyDetails(res.tracks);
+      try {
+        const res = await SpotifyAPIManager.getTrackById(tracklist);
+        setSpotifyDetails(res.data.tracks);
+      } catch (error) {
+        console.error(error);
+        return message.error(
+          'An error occurred, please contact the service provider.',
+          3
+        );
+      }
     };
     if (tracklist[0]) fetchTracks();
   }, [tracklist]);
@@ -67,10 +84,16 @@ const Playlist = () => {
       userTrackChoice.id,
       playlistId
     );
-    setSpotifyDetails([...spotifyDetails, userTrackChoice]);
-    const playlist = await APIManager.showPlaylist(res.playlist_id);
-    if (playlist.status === 'success') {
-      setTrackPlaylist(playlist.entries);
+    if (res.status === 'success') {
+      setSpotifyDetails([...spotifyDetails, userTrackChoice]);
+      const playlist = await APIManager.showPlaylist(res.playlist_id);
+      if (playlist.status === 'success') {
+        setTrackPlaylist(playlist.entries);
+      } else {
+        return message.error(playlist.messages[0], 3);
+      }
+    } else {
+      return message.error(res.messages[0], 3);
     }
   };
 
@@ -82,8 +105,16 @@ const Playlist = () => {
   const handleChange = async (e) => {
     const inputSearch = e.target.value;
     if (inputSearch) {
-      const res = await SpotifyAPIManager.searchTrackByQuery(inputSearch);
-      setSuggestions(res.tracks.items);
+      try {
+        const res = await SpotifyAPIManager.searchTrackByQuery(inputSearch);
+        setSuggestions(res.data.tracks.items);
+      } catch (error) {
+        console.error(error);
+        return message.error(
+          'An error occurred, please contact the service provider.',
+          3
+        );
+      }
     } else setSuggestions([]);
   };
 
