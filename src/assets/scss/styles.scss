@@ -1,9 +1,13 @@
-@import "./variables";
+@import './variables';
 
 * {
-  font-family: "PoppinsRegular";
+  font-family: 'PoppinsRegular';
 }
 
 .page {
   text-align: center;
+}
+
+legend {
+  font-size: 11px !important;
 }
