@@ -12,7 +12,7 @@ API.interceptors.request.use(
     headers: {
       ...headers,
       'Content-Type': 'application/json',
-      Authorization: Cookies.get(cookieName),
+      Authorization: JSON.parse(Cookies.get(cookieName)).token,
     },
   }),
   (error) => {
