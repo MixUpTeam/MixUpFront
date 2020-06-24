@@ -9,6 +9,8 @@ import {
   UserOutlined,
   MailOutlined,
   AppstoreOutlined,
+  LogoutOutlined,
+  HomeOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
 import APIManager from 'services/APIManager';
@@ -32,7 +34,8 @@ const Navbar = () => {
         Cookies.remove(cookieName);
         dispatch(removeConnection());
         dispatch(removeProfile());
-        message.success('As you wish, but come back soon ^.^', 3);
+        history.push('/');
+        message.success('Hope to see you soon!', 3);
       } catch (error) {
         console.error(error);
         return message.error('An error occurred, please retry.', 3);
@@ -48,9 +51,9 @@ const Navbar = () => {
           key="menu1"
           mode="horizontal"
           theme="dark"
-          className={location.pathname === '/' ? 'homeNavbar' : null}
+          className={location.pathname === '/' && 'homeNavbar'}
         >
-          <Menu.Item key="4" icon={<AppstoreOutlined />}>
+          <Menu.Item key="4" icon={<HomeOutlined />}>
             <NavLink exact to="/" activeClassName="active">
               Home
             </NavLink>
@@ -69,34 +72,24 @@ const Navbar = () => {
           ) : (
             <Menu.Item key="8" icon={<UserOutlined />}>
               <NavLink to="/register" activeClassName="active">
-                Register
+                Sign up
               </NavLink>
             </Menu.Item>
           )}
 
           {logStatus ? (
-            <Menu.Item key="9" disabled icon={<SettingOutlined />}>
-              <Button type="button" onClick={disconnection}>
-                Disconnect
-              </Button>
+            <Menu.Item key="9" icon={<LogoutOutlined />}>
+              <NavLink type="button" onClick={disconnection} to="/">
+                Logout
+              </NavLink>
             </Menu.Item>
           ) : (
             <Menu.Item key="1" icon={<UserOutlined />}>
               <NavLink to="/login" activeClassName="active">
-                Connection
+                Sign in
               </NavLink>
             </Menu.Item>
           )}
-
-          <Menu.Item key="10">
-            <a
-              href="https://ant.design"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              AntDesign (get quick antdesign access ;)
-            </a>
-          </Menu.Item>
         </Menu>
       </div>
     </>

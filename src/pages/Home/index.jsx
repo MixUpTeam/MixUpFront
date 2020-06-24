@@ -19,11 +19,10 @@ const Home = () => {
         </video>
         <div className="homePageContent">
           <div className="overFlowText">
-            <p className="slogan">Always target higher </p>
+            <p className="slogan">The best collective playlists</p>
             <p className="productPresentation">
-              Harry étouffa à grand-peine une exclamation. Les Dursley faisaient
-              preuve d’une étonnante bêtise lorsqu’il s’agissait de leur fils
-              Dudley
+              Invite your friends to collaborate to your playlists
+              <br /> and let them vote for the songs they want to hear!
             </p>
             <NewPlaylistButton />
           </div>

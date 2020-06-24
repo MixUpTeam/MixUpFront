@@ -1,3 +1,15 @@
-.playlist{
+.playlist {
   color: white !important;
+}
+
+#add-track-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3% 0;
+  padding-bottom: 1%;
+}
+
+#suggestion-list-label {
+  color: rgb(221, 223, 223) !important;
 }
