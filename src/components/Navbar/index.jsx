@@ -85,7 +85,9 @@ const Navbar = () => {
             </Menu.Item>
           ) : (
             <Menu.Item key="1" icon={<UserOutlined />}>
-              <NavLink to="/login">Sign in</NavLink>
+              <NavLink to="/login" activeClassName="active">
+                Sign in
+              </NavLink>
             </Menu.Item>
           )}
         </Menu>
