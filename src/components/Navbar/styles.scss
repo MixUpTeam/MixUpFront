@@ -1,6 +1,33 @@
-// this is a reminder of futur CSS on navbar
-//*.active {}
+@import '../../assets/scss/variables';
 
 .homeNavbar {
   background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.ant-menu-item-selected {
+  background-color: transparent !important;
+}
+
+.ant-menu.ant-menu-dark {
+  background-color: rgb(27, 31, 34);
+  -webkit-box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.25);
+}
+
+.ant-menu-horizontal {
+  line-height: 55px;
+}
+
+.ant-menu {
+  font-size: 18px;
+  color: rgb(247, 249, 249) !important;
+}
+
+.ant-menu-dark .ant-menu-item,
+.ant-menu-dark .ant-menu-item-group-title,
+.ant-menu-dark .ant-menu-item > a,
+.ant-menu-dark .ant-menu-item > span > a {
+  color: rgb(247, 249, 249) !important;
 }
