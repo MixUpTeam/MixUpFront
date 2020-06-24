@@ -7,6 +7,7 @@ import './styles.scss';
 
 import PlaylistTable from 'components/PlaylistTable';
 import ShareButton from 'components/ShareButton';
+import Player from 'components/Player';
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
