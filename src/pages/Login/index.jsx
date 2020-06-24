@@ -2,6 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+import './style.scss';
+
 import { Form, Input, Button, message } from 'antd';
 import Cookies from 'js-cookie';
 
@@ -12,16 +14,16 @@ import { setConnection, setProfile } from '../../redux';
 
 const layout = {
   labelCol: {
-    span: 4,
+    span: 9,
   },
   wrapperCol: {
-    span: 16,
+    span: 6,
   },
 };
 
 const tailLayout = {
   wrapperCol: {
-    offset: 4,
+    offset: 9,
     span: 16,
   },
 };
@@ -64,7 +66,8 @@ const LogIn = () => {
   };
 
   return (
-    <>
+    <div id="sign-in-form">
+      <h1 id="sign-in-title">Sign in</h1>
       <Form
         {...layout}
         name="basic"
@@ -101,11 +104,11 @@ const LogIn = () => {
 
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
-            Connect
-          </Button>
+            Sign in
+          </Button>{' '}
         </Form.Item>
       </Form>
-    </>
+    </div>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Button, message, Divider } from 'antd';
 import Cookies from 'js-cookie';
 
 import APIManager from 'services/APIManager';
@@ -10,15 +10,16 @@ import { setProfile, setConnection } from '../../redux';
 
 const layout = {
   labelCol: {
-    span: 4,
+    span: 9,
   },
   wrapperCol: {
-    span: 16,
+    span: 6,
   },
 };
+
 const tailLayout = {
   wrapperCol: {
-    offset: 4,
+    offset: 9,
     span: 16,
   },
 };
@@ -63,6 +64,7 @@ const Register = () => {
 
   return (
     <>
+      <h1 id="sign-in-title">Sign up</h1>
       <Form
         {...layout}
         name="basic"
