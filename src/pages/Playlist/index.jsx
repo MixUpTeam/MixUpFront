@@ -157,6 +157,7 @@ const Playlist = () => {
             </Button>
           </form>
         </div>
+        {spotifyDetails[0] && <Player spotifyDetails={spotifyDetails} />}
         <ShareButton />
         <p>This is the detail page of a playlist</p>
         {spotifyDetails[0] && <PlaylistTable spotifyDetails={spotifyDetails} />}

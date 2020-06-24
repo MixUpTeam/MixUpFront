@@ -1,7 +1,8 @@
 import React from 'react';
 import SpotifyPlayer from 'react-spotify-player';
 
-const Player = () => {
+const Player = ( {spotifyDetails} ) => {
+  console.log(spotifyDetails);
   const size = {
     width: '100%',
     height: 300,
@@ -12,7 +13,7 @@ const Player = () => {
   return (
     <>
       <SpotifyPlayer
-        uri="spotify:track:55p8TQ1ggGYOO1gLQrC52D"
+        uri={spotifyDetails[0].uri}
         size={size}
         view={view}
         theme={theme}
