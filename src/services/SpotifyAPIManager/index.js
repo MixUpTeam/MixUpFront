@@ -5,13 +5,15 @@ const API = axios.create({
 });
 
 API.interceptors.request.use(
-  ({ headers, ...config }) => ({
+  ({
+    headers,
+    ...config
+  }) => ({
     ...config,
     headers: {
       ...headers,
       'Content-Type': 'application/json',
-      Authorization:
-        'Bearer BQCzCATqJ0MkZyTu8IVHWfSXFHbdqbRoVuN-DTv66wjlzD-Z-2EfANIuZqSkuckhltBfgsxG_8VesUm1tAY',
+      Authorization: 'Bearer BQDArAg8rbdss66L86lth_mnX5swd01ABO7Pq1g5JgxqkeTSYmsyiMhRNIMZ-gN_uPPKEFrWK6XzSyffYU3-DAnkutEwFoThvAWjmlW60_-QCOSAA5xYc-5gQdfo8-t8KVPn2G1KO4eT3fJ07XRI',
     },
   }),
   (error) => {
