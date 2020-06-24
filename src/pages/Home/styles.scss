@@ -1,4 +1,4 @@
-@import "../../assets/scss/variables";
+@import '../../assets/scss/variables';
 
 .home {
   #homePageVideoBg {
@@ -17,6 +17,7 @@
     position: fixed;
     height: 100%;
     width: 100%;
+    padding-bottom: 5%;
 
     .overFlowText {
       color: #f1f1f1;
@@ -27,9 +28,13 @@
 
   .slogan {
     font-size: 4rem;
-    font-family: "PoppinsBlackItalic";
+    font-family: 'PoppinsBlackItalic';
+    margin-bottom: 2%;
   }
   .productPresentation {
     font-size: 1.5rem;
+    padding-left: 8%;
+    padding-right: 8%;
+    padding-bottom: 2%;
   }
 }
