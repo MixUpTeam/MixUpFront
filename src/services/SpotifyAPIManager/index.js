@@ -21,7 +21,10 @@ const API = axios.create({
 });
 
 API.interceptors.request.use(
-  ({ headers, ...config }) => ({
+  ({
+    headers,
+    ...config
+  }) => ({
     ...config,
     headers: {
       ...headers,

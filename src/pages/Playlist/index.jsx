@@ -7,6 +7,7 @@ import './styles.scss';
 
 import PlaylistTable from 'components/PlaylistTable';
 import ShareButton from 'components/ShareButton';
+import Player from 'components/Player';
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -156,6 +157,7 @@ const Playlist = () => {
             </Button>
           </form>
         </div>
+        {spotifyDetails[0] && <Player spotifyDetails={spotifyDetails} />}
         <ShareButton />
         <p>This is the detail page of a playlist</p>
         {spotifyDetails[0] && <PlaylistTable spotifyDetails={spotifyDetails} />}
