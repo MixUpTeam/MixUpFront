@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import APIManager from 'services/APIManager';
-
+import shortID from 'shortid';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -109,7 +109,7 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
             <TableRow>
               {columns.map((column) => (
                 <TableCell
-                  key={column.id}
+                  key={shortID.generate()}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                 >
@@ -134,12 +134,15 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.code}
+                      key={shortID.generate()}
                     >
                       {columns.map((column) => {
                         const value = row[column.id];
                         return (
-                          <TableCell key={column.id} align={column.align}>
+                          <TableCell
+                            key={shortID.generate()}
+                            align={column.align}
+                          >
                             {column.format && typeof value === 'number'
                               ? column.format(value)
                               : value}

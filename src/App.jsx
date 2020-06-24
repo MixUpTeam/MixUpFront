@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 import Navbar from 'components/Navbar';
 import Authroute from 'tools/Authroute';
@@ -20,7 +19,6 @@ const App = () => {
       <Router>
         <div>
           <Navbar />
-
           <Switch>
             <Authroute exact path="/new-playlist" component={NewPlaylist} />
             <Route exact path="/register" component={Register} />
