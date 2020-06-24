@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { cookieName } from '../../constants';
 
 const API = axios.create({
   baseURL: 'https://mixup-the-app.herokuapp.com',
@@ -11,7 +12,7 @@ API.interceptors.request.use(
     headers: {
       ...headers,
       'Content-Type': 'application/json',
-      Authorization: headers.Authorization || Cookies.get('token'),
+      Authorization: Cookies.get(cookieName),
     },
   }),
   (error) => {
