@@ -9,10 +9,15 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import MusicNoteOutlinedIcon from '@material-ui/icons/MusicNoteOutlined';
 import MusicOffOutlinedIcon from '@material-ui/icons/MusicOffOutlined';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import Tooltip from '@material-ui/core/Tooltip';
+import Fab from '@material-ui/core/Fab';
+import Chip from '@material-ui/core/Chip';
+
+import './styles.scss';
 
 import { message } from 'antd';
 import { setTracks } from '../../redux';
@@ -25,10 +30,16 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const useStyles = makeStyles({
     root: {
-      width: '100%',
+      width: '75%',
+      backgroundColor: 'rgb(27, 31, 34) !important',
+      margin: 'auto',
+      borderRadius: '4px',
+      padding: '1%',
+      paddingBottom: '2%',
+      marginBottom: '3%',
     },
     container: {
-      maxHeight: 440,
+      maxHeight: 1000,
     },
   });
   const classes = useStyles();
@@ -58,10 +69,10 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
   };
 
   const columns = [
-    { id: 'title', label: 'Title', minWidth: 170 },
-    { id: 'artist', label: 'Artist', minWidth: 170 },
-    { id: 'added_by', label: 'Added by', minWidth: 170 },
-    { id: 'score', label: 'Score', minWidth: 170 },
+    { id: 'title', label: 'TITLE', minWidth: 170 },
+    { id: 'artist', label: 'ARTIST', minWidth: 170 },
+    { id: 'added_by', label: 'ADDED BY', minWidth: 170 },
+    { id: 'score', label: 'SCORE', maxWidth: 60 },
   ];
 
   const createData = (title, artist, score, added_by, id) => {
@@ -92,21 +103,13 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
         );
       });
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
-            <TableRow>
+            <TableRow style={{ backgroundColor: 'rgb(27, 31, 34)' }}>
+              <TableCell>{''}</TableCell>
               {columns.map((column) => (
                 <TableCell
                   key={shortID.generate()}
@@ -116,26 +119,25 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
                   {column.label}
                 </TableCell>
               ))}
-              <TableCell>
-                <MusicNoteOutlinedIcon />
-              </TableCell>
-              <TableCell>
-                <MusicOffOutlinedIcon />
-              </TableCell>
+              <TableCell>{''}</TableCell>
+              <TableCell>{''}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows &&
               rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
+                .map((row, index) => {
                   return (
                     <TableRow
-                      hover
                       role="checkbox"
                       tabIndex={-1}
                       key={shortID.generate()}
+                      className={index === 0 && 'firstRow'}
                     >
+                      <TableCell>
+                        {index === 0 && <NavigateNextIcon />}
+                      </TableCell>
                       {columns.map((column) => {
                         const value = row[column.id];
                         return (
@@ -143,17 +145,43 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
                             key={shortID.generate()}
                             align={column.align}
                           >
-                            {column.format && typeof value === 'number'
-                              ? column.format(value)
-                              : value}
+                            {column.id === 'score' ? (
+                              <Chip
+                                label={value}
+                                style={{
+                                  backgroundColor: 'rgb(247, 249, 249)',
+                                }}
+                              />
+                            ) : (
+                              value
+                            )}
                           </TableCell>
                         );
                       })}
                       <TableCell>
-                        <MusicNoteOutlinedIcon onClick={() => Likes(row)} />
+                        <Tooltip title="Up vote">
+                          <Fab
+                            style={{
+                              backgroundColor: 'rgb(77, 217, 117)',
+                              color: 'rgb(247, 249, 249)',
+                            }}
+                            className={classes.fab}
+                            onClick={() => Likes(row)}
+                          >
+                            <MusicNoteOutlinedIcon />
+                          </Fab>
+                        </Tooltip>
                       </TableCell>
                       <TableCell>
-                        <MusicOffOutlinedIcon onClick={() => Dislikes(row)} />
+                        <Tooltip title="Down vote">
+                          <Fab
+                            color="secondary"
+                            className={classes.fab}
+                            onClick={() => Dislikes(row)}
+                          >
+                            <MusicOffOutlinedIcon />
+                          </Fab>
+                        </Tooltip>
                       </TableCell>
                     </TableRow>
                   );
@@ -161,15 +189,6 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows ? rows.length : ''}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
     </Paper>
   );
 };
