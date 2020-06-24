@@ -26,7 +26,12 @@ API.interceptors.request.use(
     headers: {
       ...headers,
       'Content-Type': 'application/json',
+<<<<<<< HEAD
       Authorization: `Bearer ${token}`,
+=======
+      Authorization:
+        'Bearer BQDAnnrmji-XkctCTQzixxiFVZ_KCOtQNBTdrGa09JhELY5f-2HezLLpQQPH6UHkHfwo9NEvlWDvaR4qf6Gzbpqtd5ca167-Iniu8IPtHdgV2NUjxEEBrqngtscrJgfFyyNsB5yVcE8ExRD27lusY1EMowxUNHyRLIqVbN87YAV_oRa94tUfR6LEFddlRWjahndmXsZyW1Y3eTggpEkZC0QVTIatXnDE2V8EyxzdzG-GEndeG-JvcQ1Ok9RALjPz65UMqwFXTNiZiUw',
+>>>>>>> 672191a... [edit] refresh token
     },
   }),
   (error) => {
