@@ -20,9 +20,10 @@ import { setTracks } from '../../redux';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
-      margin: theme.spacing(1),
       width: '50ch',
       borderColor: 'white',
+      display: 'inline-block',
+      paddingRight: '2%',
     },
   },
 }));
@@ -128,6 +129,7 @@ const Playlist = () => {
             noValidate
             autoComplete="off"
             onSubmit={(e) => searchBarOnSubmit(e)}
+            id="add-track-form"
           >
             <Autocomplete
               id="suggestion-list"
@@ -135,14 +137,13 @@ const Playlist = () => {
               getOptionLabel={(option) =>
                 `${option.name} - ${option.artists[0].name}`
               }
-              style={{ width: '100%' }}
               onChange={inputOnChange}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   variant="outlined"
                   id="track-search-input"
-                  label="name a track here"
+                  label="Find a track"
                   onChange={(e) => handleChange(e)}
                 />
               )}
@@ -159,7 +160,6 @@ const Playlist = () => {
         </div>
         {spotifyDetails[0] && <Player spotifyDetails={spotifyDetails} />}
         <ShareButton />
-        <p>This is the detail page of a playlist</p>
         {spotifyDetails[0] && <PlaylistTable spotifyDetails={spotifyDetails} />}
       </div>
     </>
