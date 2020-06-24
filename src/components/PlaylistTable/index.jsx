@@ -26,8 +26,6 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
   const dispatch = useDispatch();
   const tracklist = useSelector((state) => state.tracks.tracks);
   const userId = useSelector((state) => state.user.data.id);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const useStyles = makeStyles({
     root: {
       width: '75%',
@@ -125,67 +123,65 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
           </TableHead>
           <TableBody>
             {rows &&
-              rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  return (
-                    <TableRow
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={shortID.generate()}
-                      className={index === 0 && 'firstRow'}
-                    >
-                      <TableCell>
-                        {index === 0 && <NavigateNextIcon />}
-                      </TableCell>
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell
-                            key={shortID.generate()}
-                            align={column.align}
-                          >
-                            {column.id === 'score' ? (
-                              <Chip
-                                label={value}
-                                style={{
-                                  backgroundColor: 'rgb(247, 249, 249)',
-                                }}
-                              />
-                            ) : (
-                              value
-                            )}
-                          </TableCell>
-                        );
-                      })}
-                      <TableCell>
-                        <Tooltip title="Up vote">
-                          <Fab
-                            style={{
-                              backgroundColor: 'rgb(77, 217, 117)',
-                              color: 'rgb(247, 249, 249)',
-                            }}
-                            className={classes.fab}
-                            onClick={() => Likes(row)}
-                          >
-                            <MusicNoteOutlinedIcon />
-                          </Fab>
-                        </Tooltip>
-                      </TableCell>
-                      <TableCell>
-                        <Tooltip title="Down vote">
-                          <Fab
-                            color="secondary"
-                            className={classes.fab}
-                            onClick={() => Dislikes(row)}
-                          >
-                            <MusicOffOutlinedIcon />
-                          </Fab>
-                        </Tooltip>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+              rows.map((row, index) => {
+                return (
+                  <TableRow
+                    role="checkbox"
+                    tabIndex={-1}
+                    key={shortID.generate()}
+                    className={index === 0 && 'firstRow'}
+                  >
+                    <TableCell>{index === 0 && <NavigateNextIcon />}</TableCell>
+                    {columns.map((column) => {
+                      const value = row[column.id];
+                      return (
+                        <TableCell
+                          key={shortID.generate()}
+                          align={column.align}
+                        >
+                          {column.id === 'score' ? (
+                            <Chip
+                              label={value}
+                              style={{
+                                backgroundColor: 'rgb(247, 249, 249)',
+                                borderRadius: '100%',
+                                width: '2rem',
+                              }}
+                            />
+                          ) : (
+                            value
+                          )}
+                        </TableCell>
+                      );
+                    })}
+                    <TableCell>
+                      <Tooltip title="Up vote">
+                        <Fab
+                          style={{
+                            backgroundColor: 'rgb(77, 217, 117)',
+                            color: 'rgb(247, 249, 249)',
+                          }}
+                          className={classes.fab}
+                          onClick={() => Likes(row)}
+                        >
+                          <MusicNoteOutlinedIcon />
+                        </Fab>
+                      </Tooltip>
+                    </TableCell>
+                    <TableCell>
+                      <Tooltip title="Down vote">
+                        <Fab
+                          color="secondary"
+                          className={classes.fab}
+                          onClick={() => Dislikes(row)}
+                        >
+                          <MusicOffOutlinedIcon />
+                        </Fab>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>
