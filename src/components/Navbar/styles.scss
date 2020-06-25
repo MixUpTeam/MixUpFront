@@ -31,3 +31,17 @@
 .ant-menu-dark .ant-menu-item > span > a {
   color: rgb(247, 249, 249) !important;
 }
+
+.newPlaylistNavlink:hover{
+  background-color: $primary-pink-for-btn !important;
+}
+
+.ant-menu-dark .ant-menu-item > span > a.importantLinkText{
+  color: $primary-pink-for-btn !important;
+  font-weight: bold;
+}
+
+.ant-menu-dark .ant-menu-item-active > span > a.importantLinkText{
+  color: white !important;
+  font-weight: bold;
+}

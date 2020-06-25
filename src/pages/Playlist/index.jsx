@@ -8,6 +8,7 @@ import './styles.scss';
 import PlaylistTable from 'components/PlaylistTable';
 import ShareButton from 'components/ShareButton';
 import Player from 'components/Player';
+import NewPlaylistButton from 'components/NewPlaylistButton';
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -34,12 +35,14 @@ const Playlist = () => {
   const { playlistId } = useParams();
   const dispatch = useDispatch();
   const tracklist = useSelector((state) => state.tracks.tracks);
+  const playlistName = useSelector((state) => state.tracks.name);
+  const playlistOwner = useSelector((state) => state.tracks.owner);
   const [userTrackChoice, setUserTrackChoice] = useState(null);
   const [spotifyDetails, setSpotifyDetails] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
-  const setTrackPlaylist = (data) => {
-    dispatch(setTracks(data));
+  const setTrackPlaylist = (tracks, name, owner) => {
+    dispatch(setTracks(tracks, name, owner));
   };
 
   useEffect(() => {
@@ -48,7 +51,7 @@ const Playlist = () => {
       const res = await APIManager.showPlaylist(playlistId);
       if (res.status === 'success') {
         if (res.entries[0]) {
-          setTrackPlaylist(res.entries);
+          setTrackPlaylist(res.entries, res.name, res.owner.id);
         } else {
           return message.success(
             'This is a fresh playlist, add some sounds!',
@@ -158,9 +161,24 @@ const Playlist = () => {
             </Button>
           </form>
         </div>
-        {spotifyDetails[0] && <Player spotifyDetails={spotifyDetails} />}
         <ShareButton />
-        {spotifyDetails[0] && <PlaylistTable spotifyDetails={spotifyDetails} />}
+
+        {playlistName && (
+          <marquee>
+            You are listening to "{playlistName}", created by user{' '}
+            {playlistOwner}
+          </marquee>
+        )}
+        {spotifyDetails[0] && (
+          <>
+            <Player spotifyDetails={spotifyDetails} />
+            <PlaylistTable spotifyDetails={spotifyDetails} />
+            <div>
+              <p>Your favorite songs are not here?</p>
+              <NewPlaylistButton />
+            </div>
+          </>
+        )}
       </div>
     </>
   );
