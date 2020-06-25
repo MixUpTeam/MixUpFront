@@ -161,6 +161,7 @@ const Playlist = () => {
             </Button>
           </form>
         </div>
+        {spotifyDetails[0] && <Player />}
         <ShareButton />
 
         {playlistName && (
