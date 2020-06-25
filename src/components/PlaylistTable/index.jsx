@@ -35,6 +35,7 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
       padding: '1%',
       paddingBottom: '2%',
       marginBottom: '3%',
+      boxShadow: '1px 1px 20px rgb(27, 31, 34)',
     },
     container: {
       maxHeight: 1000,
@@ -107,7 +108,7 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow style={{ backgroundColor: 'rgb(27, 31, 34)' }}>
-              <TableCell>{''}</TableCell>
+              <TableCell />
               {columns.map((column) => (
                 <TableCell
                   key={shortID.generate()}
@@ -117,8 +118,8 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
                   {column.label}
                 </TableCell>
               ))}
-              <TableCell>{''}</TableCell>
-              <TableCell>{''}</TableCell>
+              <TableCell />
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -146,8 +147,8 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
                                 backgroundColor: 'rgb(247, 249, 249)',
                                 borderRadius: '100%',
                                 padding: '1%',
-                                width: '56px',
-                                height: '56px',
+                                width: '3.5rem',
+                                height: '3.5rem',
                               }}
                             />
                           ) : (
