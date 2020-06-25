@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import './style.scss';
+import '../../assets/scss/forms.scss';
 
 import { Form, Input, Button, message } from 'antd';
 import Cookies from 'js-cookie';
@@ -23,7 +23,7 @@ const layout = {
 
 const tailLayout = {
   wrapperCol: {
-    offset: 4,
+    offset: 9,
     span: 16,
   },
 };
@@ -66,8 +66,8 @@ const LogIn = () => {
   };
 
   return (
-    <div id="sign-in-form" className="page">
-      <h1 id="sign-in-title">Sign in</h1>
+    <div className="forms">
+      <h1>Sign in</h1>
       <Form
         {...layout}
         name="basic"
@@ -108,7 +108,7 @@ const LogIn = () => {
           </Button>{' '}
         </Form.Item>
       </Form>
-      <p>
+      <p className="authDirection">
         New comer? Sign up <Link to="/sign_up">here</Link>
       </p>
     </div>

@@ -1,6 +1,9 @@
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
+import '../../assets/scss/forms.scss';
+
 import { Form, Input, Button, message, Divider } from 'antd';
 import Cookies from 'js-cookie';
 
@@ -19,7 +22,7 @@ const layout = {
 
 const tailLayout = {
   wrapperCol: {
-    offset: 4,
+    offset: 9,
     span: 16,
   },
 };
@@ -64,8 +67,8 @@ const Register = () => {
 
   return (
     <>
-      <div className="page">
-        <h1 id="sign-in-title">Sign up</h1>
+      <div className="forms">
+        <h1>Sign up</h1>
         <Form
           {...layout}
           name="basic"
@@ -106,7 +109,7 @@ const Register = () => {
             </Button>
           </Form.Item>
         </Form>
-        <p>
+        <p className="authDirection">
           Already have an account? Sign in <Link to="/sign_in">here</Link>
         </p>
       </div>
