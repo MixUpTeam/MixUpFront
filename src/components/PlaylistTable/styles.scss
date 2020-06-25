@@ -1,3 +1,5 @@
+@import '../../assets/scss/variables';
+
 .MuiTableCell-stickyHeader {
   background-color: rgb(27, 31, 34) !important;
   color: rgb(203, 205, 206) !important;
@@ -14,4 +16,8 @@
 
 .firstRow {
   background-color: rgba(248, 232, 107, 0.589);
+}
+
+.MuiChip-label {
+  font-family: 'PoppinsBoldItalic';
 }

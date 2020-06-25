@@ -145,7 +145,9 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
                               style={{
                                 backgroundColor: 'rgb(247, 249, 249)',
                                 borderRadius: '100%',
-                                width: '2rem',
+                                padding: '1%',
+                                width: '56px',
+                                height: '56px',
                               }}
                             />
                           ) : (
