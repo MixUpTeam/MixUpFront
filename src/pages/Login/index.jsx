@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import './style.scss';
@@ -23,7 +23,7 @@ const layout = {
 
 const tailLayout = {
   wrapperCol: {
-    offset: 9,
+    offset: 4,
     span: 16,
   },
 };
@@ -66,7 +66,7 @@ const LogIn = () => {
   };
 
   return (
-    <div id="sign-in-form">
+    <div id="sign-in-form" className="page">
       <h1 id="sign-in-title">Sign in</h1>
       <Form
         {...layout}
@@ -108,6 +108,9 @@ const LogIn = () => {
           </Button>{' '}
         </Form.Item>
       </Form>
+      <p>
+        New comer? Sign up <Link to="/sign_up">here</Link>
+      </p>
     </div>
   );
 };

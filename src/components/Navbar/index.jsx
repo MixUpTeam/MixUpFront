@@ -97,7 +97,7 @@ const Navbar = () => {
 
           {!logStatus && (
             <Menu.Item icon={<UserOutlined />}>
-              <NavLink to="/login" activeClassName="active">
+              <NavLink to="/sign_in" activeClassName="active">
                 Sign in
               </NavLink>
             </Menu.Item>
@@ -105,7 +105,7 @@ const Navbar = () => {
 
           {!logStatus && (
             <Menu.Item icon={<UserOutlined />}>
-              <NavLink to="/register" activeClassName="active">
+              <NavLink to="/sign_up" activeClassName="active">
                 Sign up
               </NavLink>
             </Menu.Item>
