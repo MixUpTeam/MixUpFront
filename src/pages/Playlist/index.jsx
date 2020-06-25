@@ -78,7 +78,7 @@ const Playlist = () => {
         );
       }
     };
-    if (tracklist[0]) fetchTracks();
+    if (tracklist[0] && tracklist[0].playlist_id == playlistId) fetchTracks();
   }, [tracklist]);
 
   const searchBarOnSubmit = async (e) => {
@@ -127,6 +127,12 @@ const Playlist = () => {
     <>
       <div className="page playlist">
         <div>
+          {playlistName && (
+            <marquee>
+              You are listening to "{playlistName}", created by user{' '}
+              {playlistOwner}
+            </marquee>
+          )}
           <form
             className={classes.root}
             noValidate
@@ -161,24 +167,18 @@ const Playlist = () => {
             </Button>
           </form>
         </div>
-        {spotifyDetails[0] && <Player />}
         <ShareButton />
-
-        {playlistName && (
-          <marquee>
-            You are listening to "{playlistName}", created by user{' '}
-            {playlistOwner}
-          </marquee>
-        )}
-        {spotifyDetails[0] && (
+        {spotifyDetails[0] ? (
           <>
-            <Player spotifyDetails={spotifyDetails} />
+            {spotifyDetails[0] && <Player />}
             <PlaylistTable spotifyDetails={spotifyDetails} />
             <div>
               <p>Your favorite songs are not here?</p>
               <NewPlaylistButton />
             </div>
           </>
+        ) : (
+          <h1>Add some tracks!</h1>
         )}
       </div>
     </>
