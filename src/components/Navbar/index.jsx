@@ -58,7 +58,14 @@ const Navbar = () => {
               Home
             </NavLink>
           </Menu.Item>
-          {logStatus ? (
+
+          {logStatus && (
+            <Menu.Item disabled icon={<SettingOutlined />}>
+              Profile
+            </Menu.Item>
+          )}
+
+          {logStatus && (
             <Menu.Item
               className="newPlaylistNavlink"
               icon={<CustomerServiceOutlined />}
@@ -71,21 +78,8 @@ const Navbar = () => {
                 CREATE A PLAYLIST
               </NavLink>
             </Menu.Item>
-          ) : (
-            <></>
           )}
 
-          {logStatus ? (
-            <Menu.Item disabled icon={<SettingOutlined />}>
-              Profile
-            </Menu.Item>
-          ) : (
-            <Menu.Item icon={<UserOutlined />}>
-              <NavLink to="/register" activeClassName="active">
-                Sign up
-              </NavLink>
-            </Menu.Item>
-          )}
           <Menu.Item disabled icon={<AppstoreOutlined />}>
             About
           </Menu.Item>
@@ -93,16 +87,26 @@ const Navbar = () => {
             Contact
           </Menu.Item>
 
-          {logStatus ? (
+          {logStatus && (
             <Menu.Item icon={<LogoutOutlined />}>
               <NavLink type="button" onClick={disconnection} to="/">
                 Logout
               </NavLink>
             </Menu.Item>
-          ) : (
+          )}
+
+          {!logStatus && (
             <Menu.Item icon={<UserOutlined />}>
               <NavLink to="/login" activeClassName="active">
                 Sign in
+              </NavLink>
+            </Menu.Item>
+          )}
+
+          {!logStatus && (
+            <Menu.Item icon={<UserOutlined />}>
+              <NavLink to="/register" activeClassName="active">
+                Sign up
               </NavLink>
             </Menu.Item>
           )}
