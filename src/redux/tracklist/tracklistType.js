@@ -1,2 +1,3 @@
 export const SET_TRACKS = 'SET_TRACKS';
 export const CREATE_TRACK = 'CREATE_TRACK';
+export const SET_CURRENT_TRACK = 'SET_CURRENT_TRACK';
