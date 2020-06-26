@@ -16,7 +16,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import { message } from 'antd';
 
-import { setTracks } from '../../redux';
+import { setTracks, setCurrentTrack } from '../../redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,19 +30,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Playlist = () => {
-  const userId = useSelector((state) => state.user.data.id);
   const classes = useStyles();
   const { playlistId } = useParams();
   const dispatch = useDispatch();
+  const userId = useSelector((state) => state.user.data.id);
   const tracklist = useSelector((state) => state.tracks.tracks);
   const playlistName = useSelector((state) => state.tracks.name);
   const playlistOwner = useSelector((state) => state.tracks.owner);
+  const currentTrack = useSelector((state) => state.tracks.currentTrack);
   const [userTrackChoice, setUserTrackChoice] = useState(null);
   const [spotifyDetails, setSpotifyDetails] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
-  const setTrackPlaylist = (tracks, name, owner) => {
+  const setTrackPlaylist = (tracks, name, owner, currentTrack) => {
     dispatch(setTracks(tracks, name, owner));
+    dispatch(setCurrentTrack(currentTrack))
   };
 
   useEffect(() => {
@@ -51,7 +53,8 @@ const Playlist = () => {
       const res = await APIManager.showPlaylist(playlistId);
       if (res.status === 'success') {
         if (res.entries[0]) {
-          setTrackPlaylist(res.entries, res.name, res.owner.username);
+          setTrackPlaylist(res.entries, res.name, res.owner.id, res.entries[0]);
+          // TODO:replace res.entries[0] with real data
         } else {
           return message.success(
             'This is a fresh playlist, add some sounds!',
@@ -171,7 +174,7 @@ const Playlist = () => {
         )}
         {spotifyDetails[0] && (
           <>
-            <Player spotifyDetails={spotifyDetails} />
+            <Player spotifyTrack={spotifyDetails.find((el) => (el.id === currentTrack.track_spotify_id))} trackPlaylistId={currentTrack.id} />
             <PlaylistTable spotifyDetails={spotifyDetails} />
             <div>
               <p>Your favorite songs are not here?</p>

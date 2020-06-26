@@ -84,4 +84,11 @@ export default class APIManager {
     );
     return res.data;
   }
+
+  static async finishTrack(track_playlist_id) {
+    const res = await API.get(
+      `api/v1/track_playlists/${track_playlist_id}/finish_track`
+    );
+    return res.data;
+  }
 }
