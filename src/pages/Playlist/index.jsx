@@ -178,7 +178,7 @@ const Playlist = () => {
             <span>{playlistOwner}</span>
           </p>
         )}
-        {spotifyDetails[0] && (
+        {spotifyDetails[0] ? (
           <>
             <Player spotifyTrack={spotifyDetails.find((el) => (el.id === currentTrack.track_spotify_id))} trackPlaylistId={currentTrack.id} />
             <PlaylistTable spotifyDetails={spotifyDetails} />
