@@ -5,7 +5,7 @@ import './styles.scss';
 
 const Player = ({ spotifyTrack, trackPlaylistId }: Player) => {
   const token =
-    'BQBD9lldPwvQUK7q-88v2V5YScS4aAjhDdEaYgqvcWuNyfw7Ve__TNFAHF4taE45Gm44-cc96LC2uEIlfbH4gAWWm-fonOKh_tzJN2RuTA_J4zvrUrGvumm3Ucg8rrLuBBhHw0IQ1jG6R1R4ReLHmuvgZCWqoU3KfDTo1kMon-j47AQuX-YiQ8DNpgrHRB0t74OO0kUBrHuKDDo';
+    'BQCKKgXxCI11GdS-cSqHYEXv5hkkY7EGoaWln5Jm4NU9tLT4Chatq3wAV6olinLs4YqyhQPx77_M4VeKWpRDcP3BFLCipajQQenvJIpyF8j8ISYPRAt6a3ir5s-PyoBwgzBHruOVlJr8lzwbJqwGU0DWh7RX_XMaR3AbDTyn4SXSze45efbJpwBFtCcMUteKDydI1BAOnxLLmjo';
 
   const renderedItem = () => {
     return (
