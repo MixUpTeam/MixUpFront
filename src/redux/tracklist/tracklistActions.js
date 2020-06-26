@@ -1,7 +1,7 @@
 import {
   SET_TRACKS,
   CREATE_TRACK,
-  SET_CURRENT_TRACK
+  SET_CURRENT_TRACK,
 } from 'redux/tracklist/tracklistType';
 
 export const setTracks = (tracks, name, owner) => {
