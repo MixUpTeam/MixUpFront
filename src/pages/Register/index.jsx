@@ -62,7 +62,7 @@ const Register = () => {
   };
 
   const onFinish = (values) => {
-    Inscription(values);
+    Inscription({ ...values, email: values.email.toLowerCase() });
   };
 
   return (

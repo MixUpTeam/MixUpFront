@@ -62,7 +62,7 @@ const LogIn = () => {
   };
 
   const onFinish = (values) => {
-    Connection(values);
+    Connection({ ...values, email: values.email.toLowerCase() });
   };
 
   return (
