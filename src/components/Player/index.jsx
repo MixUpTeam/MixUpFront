@@ -1,22 +1,27 @@
 import React from 'react';
-import SpotifyPlayer from 'react-spotify-player';
+import { useSelector } from 'react-redux';
+import SpotifyPlayer from 'react-spotify-web-playback';
 
-const Player = ( {spotifyTrack, trackPlaylistId } ) => {
-  const size = {
-    width: '100%',
-    height: 300,
-  };
-  const view = 'list'; // or 'coverart'
-  const theme = 'black'; // or 'white'
+import './styles.scss';
+
+const Player = () => {
+  const tracklist = useSelector((state) => state.tracks.tracks);
+
+  const token =
+    'BQB0MlVqBhnxyvk1KXKIh60eoYDy9Bv2Nb9dI5XRLqxBaW6DtlhREQZZwhmshkj4isCwUFopFRcdIlLyK6Gn441gJS23ATp0LJ7yZNraHmHOlELGNqLN2hD3oWmrOBlHoUjIUcXPxotJBgRJcUl0B3TAtWzjZ8H7kzkHZ751Nyuy6AA9LNhiKbSSqw';
+
+  const uris = [];
+  tracklist
+    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+    .sort((a, b) => b.score - a.score)
+    .map((x) => {
+      uris.push(`spotify:track:${x.track_spotify_id}`);
+    });
+  console.log(uris);
 
   return (
     <>
-      <SpotifyPlayer
-        uri={spotifyTrack.uri}
-        size={size}
-        view={view}
-        theme={theme}
-      />
+      <SpotifyPlayer autoPlay token={token} uris={uris} />
     </>
   );
 };
