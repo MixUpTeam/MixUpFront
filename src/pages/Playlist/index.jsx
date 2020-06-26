@@ -16,7 +16,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import { message } from 'antd';
 
-import { setTracks } from '../../redux';
+import { setTracks, setCurrentTrack } from '../../redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,19 +30,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Playlist = () => {
-  const userId = useSelector((state) => state.user.data.id);
   const classes = useStyles();
   const { playlistId } = useParams();
   const dispatch = useDispatch();
+  const userId = useSelector((state) => state.user.data.id);
   const tracklist = useSelector((state) => state.tracks.tracks);
   const playlistName = useSelector((state) => state.tracks.name);
   const playlistOwner = useSelector((state) => state.tracks.owner);
+  const currentTrack = useSelector((state) => state.tracks.currentTrack);
+
   const [userTrackChoice, setUserTrackChoice] = useState(null);
   const [spotifyDetails, setSpotifyDetails] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
-  const setTrackPlaylist = (tracks, name, owner) => {
+  const setTrackPlaylist = (tracks, name, owner, currTrackResponse) => {
     dispatch(setTracks(tracks, name, owner));
+    dispatch(setCurrentTrack(currTrackResponse));
   };
 
   useEffect(() => {
@@ -51,7 +54,12 @@ const Playlist = () => {
       const res = await APIManager.showPlaylist(playlistId);
       if (res.status === 'success') {
         if (res.entries[0]) {
-          setTrackPlaylist(res.entries, res.name, res.owner.username);
+          setTrackPlaylist(
+            res.entries,
+            res.name,
+            res.owner.id,
+            res.current_track
+          );
         } else {
           return message.success(
             'This is a fresh playlist, add some sounds!',
@@ -78,7 +86,7 @@ const Playlist = () => {
         );
       }
     };
-    if (tracklist[0]) fetchTracks();
+    if (tracklist[0] && tracklist[0].playlist_id == playlistId) fetchTracks();
   }, [tracklist]);
 
   const searchBarOnSubmit = async (e) => {
@@ -92,8 +100,16 @@ const Playlist = () => {
     if (res.status === 'success') {
       setSpotifyDetails([...spotifyDetails, userTrackChoice]);
       const playlist = await APIManager.showPlaylist(res.playlist_id);
+      console.log('searchBarOnSubmit -> playlist', playlist);
       if (playlist.status === 'success') {
-        setTrackPlaylist(playlist.entries);
+        console.log('searchBarOnSubmit -> playlist', playlist);
+        console.log('searchBarOnSubmit -> playlist', playlist.entries[0]);
+        setTrackPlaylist(
+          playlist.entries,
+          playlist.name,
+          playlist.owner.id,
+          playlist.current_track
+        );
       } else {
         return message.error(playlist.messages[0], 3);
       }
@@ -163,21 +179,26 @@ const Playlist = () => {
         </div>
         <ShareButton />
 
-        {spotifyDetails[0] && (
-          <p className="playlistIdentity">
-            You are listening to <span>{playlistName}</span>, created by{' '}
-            <span>{playlistOwner}</span>
-          </p>
-        )}
-        {spotifyDetails[0] && (
+        {spotifyDetails[0] && currentTrack ? (
           <>
-            <Player spotifyDetails={spotifyDetails} />
+            <p className="playlistIdentity">
+              You are listening to <span>{playlistName}</span>, created by{' '}
+              <span>{playlistOwner}</span>
+            </p>
+            <Player
+              spotifyTrack={spotifyDetails.find(
+                (el) => el.id === currentTrack.track_spotify_id
+              )}
+              trackPlaylistId={currentTrack.id}
+            />
             <PlaylistTable spotifyDetails={spotifyDetails} />
             <div>
               <p>Your favorite songs are not here?</p>
               <NewPlaylistButton />
             </div>
           </>
+        ) : (
+          <h1>Add some tracks!</h1>
         )}
       </div>
     </>
