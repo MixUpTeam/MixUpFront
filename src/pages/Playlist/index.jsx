@@ -51,7 +51,7 @@ const Playlist = () => {
       const res = await APIManager.showPlaylist(playlistId);
       if (res.status === 'success') {
         if (res.entries[0]) {
-          setTrackPlaylist(res.entries, res.name, res.owner.id);
+          setTrackPlaylist(res.entries, res.name, res.owner.username);
         } else {
           return message.success(
             'This is a fresh playlist, add some sounds!',
@@ -132,7 +132,7 @@ const Playlist = () => {
             noValidate
             autoComplete="off"
             onSubmit={(e) => searchBarOnSubmit(e)}
-            id="add-track-form"
+            id="addTrackForm"
           >
             <Autocomplete
               id="suggestion-list"
@@ -155,7 +155,7 @@ const Playlist = () => {
               type="submit"
               variant="contained"
               color="secondary"
-              id="new-playlist-button"
+              id="newPlaylistButton"
             >
               Add this track
             </Button>
@@ -163,11 +163,11 @@ const Playlist = () => {
         </div>
         <ShareButton />
 
-        {playlistName && (
-          <marquee>
-            You are listening to "{playlistName}", created by user{' '}
-            {playlistOwner}
-          </marquee>
+        {spotifyDetails[0] && (
+          <p className="playlistIdentity">
+            You are listening to <span>{playlistName}</span>, created by{' '}
+            <span>{playlistOwner}</span>
+          </p>
         )}
         {spotifyDetails[0] && (
           <>

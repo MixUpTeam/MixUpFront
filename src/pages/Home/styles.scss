@@ -15,14 +15,14 @@
     align-items: center;
     justify-content: center;
     position: fixed;
-    height: 100%;
+    bottom: 0;
+    height: 90%;
     width: 100%;
     padding-bottom: 5%;
 
     .overFlowText {
       color: #f1f1f1;
       width: 100%;
-      padding: 5rem;
     }
   }
 
@@ -30,11 +30,25 @@
     font-size: 4rem;
     font-family: 'PoppinsBlackItalic';
     margin-bottom: 2%;
+
+    @media (max-width: $xs-max) {
+      font-size: 2rem;
+    }
   }
+
   .productPresentation {
     font-size: 1.5rem;
     padding-left: 8%;
     padding-right: 8%;
     padding-bottom: 2%;
+
+    @media (max-width: $xs-max) {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: $xs-max) {
+    margin-top: -4rem;
+    font-size: 1rem;
   }
 }

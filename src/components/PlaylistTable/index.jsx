@@ -41,6 +41,7 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
       maxHeight: 1000,
     },
   });
+
   const classes = useStyles();
 
   const setTrackPlaylist = (data) => {
@@ -50,6 +51,7 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
   const Likes = async (track) => {
     const res = await APIManager.upVote(track.id, userId);
     const playlist = await APIManager.showPlaylist(res.playlist_id);
+
     if (playlist.status === 'success') {
       setTrackPlaylist(playlist.entries);
     } else {
@@ -84,7 +86,12 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
     };
   };
 
+  const classNamePerRow = (index) => {
+    return index === 0 ? 'firstRow' : '';
+  };
+
   const rows = [];
+
   spotifyDetails &&
     spotifyDetails.length < 41 &&
     tracklist
@@ -130,7 +137,7 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
                     role="checkbox"
                     tabIndex={-1}
                     key={shortID.generate()}
-                    className={index === 0 && 'firstRow'}
+                    className={classNamePerRow(index)}
                   >
                     <TableCell>{index === 0 && <NavigateNextIcon />}</TableCell>
                     {columns.map((column) => {

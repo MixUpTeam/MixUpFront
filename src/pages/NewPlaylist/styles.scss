@@ -1,41 +1,68 @@
 @import '../../assets/scss/variables';
 
+.new-playlist-page {
+  @media (max-width: $xs-max) {
+    margin-top: 7rem;
+  }
+
+  @media (max-width: $md-max) and (min-width: $md-min) {
+    margin-top: 25%;
+  }
+  
+  @media (max-width: $xs-max) {
+    margin-top: 4rem;
+    padding: 0 2rem;
+  }
+
+  h1 {
+    color: #f7f9f9 !important;
+    font-size: 5rem;
+    font-family: 'PoppinsBoldItalic';
+    padding: 5% 0 2% 0;
+
+    @media (max-width: $xs-max) {
+      font-size: 3rem;
+    }
+  }
+
+  #new-playlist-button {
+    width: 18%;
+  }
+
+  #form-new-playlist {
+    width: 100%;
+  }
+
+  .MuiOutlinedInput-notchedOutline {
+    border-color: #f7f9f9 !important;
+  }
+
+  .MuiInputBase-input {
+    height: 100% !important;
+  }
+
+  #outlined-basic-label {
+    color: #f7f9f9;
+  }
+
+  .MuiInputBase-root {
+    color: #f7f9f9 !important;
+    font-size: 2em !important;
+  }
+
+  .PrivateNotchedOutline-legendLabelled-4 {
+    font-size: 10px !important;
+  }
+  
+  .MuiFormControl-root {
+    @media (max-width: $xs-max) {
+      width: 90%;
+    }
+  }
+}
+
 body {
   background-color: rgb(44, 49, 52);
 }
 
-h1 {
-  color: #f7f9f9 !important;
-  font-size: 5rem;
-  font-family: 'PoppinsBoldItalic';
-  padding: 5% 0 2% 0;
-}
 
-#new-playlist-button {
-  width: 18%;
-}
-
-#form-new-playlist {
-  width: 100%;
-}
-
-.MuiOutlinedInput-notchedOutline {
-  border-color: #f7f9f9 !important;
-}
-
-.MuiInputBase-input {
-  height: 100% !important;
-}
-
-#outlined-basic-label {
-  color: #f7f9f9;
-}
-
-.MuiInputBase-root {
-  color: #f7f9f9 !important;
-  font-size: 2em !important;
-}
-
-.PrivateNotchedOutline-legendLabelled-4 {
-  font-size: 10px !important;
-}

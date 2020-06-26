@@ -1,8 +1,7 @@
 import React from 'react';
 import SpotifyPlayer from 'react-spotify-player';
 
-const Player = ( {spotifyDetails} ) => {
-  console.log(spotifyDetails);
+const Player = ({ spotifyDetails }) => {
   const size = {
     width: '100%',
     height: 300,
