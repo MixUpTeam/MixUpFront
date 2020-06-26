@@ -102,7 +102,7 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
           .name;
 
         const artist = spotifyDetails.find((el) => p.track_spotify_id === el.id)
-          .artists[0].name;
+          .id;
 
         rows.push(
           createData(title, artist, p.score, p.added_by.username, p.id)

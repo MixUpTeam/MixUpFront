@@ -40,7 +40,6 @@ const Playlist = () => {
   const currentTrack = useSelector((state) => state.tracks.currentTrack);
   const [userTrackChoice, setUserTrackChoice] = useState(null);
   const [spotifyDetails, setSpotifyDetails] = useState([]);
-  console.log('Playlist -> spotifyDetails', spotifyDetails);
   const [suggestions, setSuggestions] = useState([]);
 
   const setTrackPlaylist = (tracks, name, owner, currTrackResponse) => {
