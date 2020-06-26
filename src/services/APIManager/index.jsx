@@ -85,9 +85,9 @@ export default class APIManager {
     return res.data;
   }
 
-  static async finishTrack(track_playlist_id) {
+  static async finishTrack(trackPlaylistID) {
     const res = await API.get(
-      `api/v1/track_playlists/${track_playlist_id}/finish_track`
+      `api/v1/track_playlists/${trackPlaylistID}/finish_track`
     );
     return res.data;
   }

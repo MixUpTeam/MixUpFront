@@ -86,10 +86,6 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
     };
   };
 
-  const classNamePerRow = (index) => {
-    return index === 0 ? 'firstRow' : '';
-  };
-
   const rows = [];
 
   spotifyDetails &&
@@ -137,7 +133,6 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
                     role="checkbox"
                     tabIndex={-1}
                     key={shortID.generate()}
-                    className={classNamePerRow(index)}
                   >
                     <TableCell>{index === 0 && <NavigateNextIcon />}</TableCell>
                     {columns.map((column) => {
