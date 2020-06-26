@@ -54,8 +54,12 @@ const Playlist = () => {
       const res = await APIManager.showPlaylist(playlistId);
       if (res.status === 'success') {
         if (res.entries[0]) {
-          setTrackPlaylist(res.entries, res.name, res.owner.id, res.entries[0]);
-          // TODO:replace res.entries[0] with real data
+          setTrackPlaylist(
+            res.entries,
+            res.name,
+            res.owner.id,
+            res.current_track
+          );
         } else {
           return message.success(
             'This is a fresh playlist, add some sounds!',
@@ -104,7 +108,7 @@ const Playlist = () => {
           playlist.entries,
           playlist.name,
           playlist.owner.id,
-          playlist.entries[0]
+          playlist.current_track
         );
       } else {
         return message.error(playlist.messages[0], 3);
