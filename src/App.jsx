@@ -21,8 +21,8 @@ const App = () => {
           <Navbar />
           <Switch>
             <Authroute exact path="/new-playlist" component={NewPlaylist} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={LogIn} />
+            <Route exact path="/sign_up" component={Register} />
+            <Route exact path="/sign_in" component={LogIn} />
             <Route exact path="/about" component={About} />
             <Authroute
               exact

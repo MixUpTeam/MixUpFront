@@ -11,11 +11,9 @@ const rootReducer = combineReducers({
   tracks: tracklistReducer,
 });
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   rootReducer,
-  compose(
-    applyMiddleware(thunkMiddleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
+  composeEnhancers(applyMiddleware(thunkMiddleware))
 );
 export default store;

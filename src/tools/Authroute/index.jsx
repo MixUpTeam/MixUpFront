@@ -16,8 +16,8 @@ const AuthRoute = ({ component: Component, ...rest }: AuthRoute) => {
             <Component {...props} />
           ) : (
             <div>
-              <Redirect to={{ pathname: '/login' }} />
-              {message.warning('Please log in to continue.', 3)}
+              <Redirect to={{ pathname: '/sign_in' }} />
+              {message.warning('Please sign in to continue.', 3)}
             </div>
           )
         }
