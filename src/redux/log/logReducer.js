@@ -9,7 +9,6 @@ const initialState = {
 const logReducer = (state = initialState, action) => {
   switch (action.type) {
     case CONNECTION:
-      console.log(JSON.parse(Cookies.get(cookieName)));
       return {
         ...state,
         user_connected: true,

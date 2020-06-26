@@ -1,8 +1,8 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import './style.scss';
+import '../../assets/scss/forms.scss';
 
 import { Form, Input, Button, message } from 'antd';
 import Cookies from 'js-cookie';
@@ -62,12 +62,12 @@ const LogIn = () => {
   };
 
   const onFinish = (values) => {
-    Connection(values);
+    Connection({ ...values, email: values.email.toLowerCase() });
   };
 
   return (
-    <div id="sign-in-form">
-      <h1 id="sign-in-title">Sign in</h1>
+    <div className="forms">
+      <h1>Sign in</h1>
       <Form
         {...layout}
         name="basic"
@@ -108,6 +108,9 @@ const LogIn = () => {
           </Button>{' '}
         </Form.Item>
       </Form>
+      <p className="authDirection">
+        New comer? Sign up <Link to="/sign_up">here</Link>
+      </p>
     </div>
   );
 };

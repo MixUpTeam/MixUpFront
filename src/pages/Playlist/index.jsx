@@ -135,7 +135,7 @@ const Playlist = () => {
             noValidate
             autoComplete="off"
             onSubmit={(e) => searchBarOnSubmit(e)}
-            id="add-track-form"
+            id="addTrackForm"
           >
             <Autocomplete
               id="suggestion-list"
@@ -158,7 +158,7 @@ const Playlist = () => {
               type="submit"
               variant="contained"
               color="secondary"
-              id="new-playlist-button"
+              id="newPlaylistButton"
             >
               Add this track
             </Button>
@@ -166,11 +166,11 @@ const Playlist = () => {
         </div>
         <ShareButton />
 
-        {playlistName && (
-          <marquee>
-            You are listening to "{playlistName}", created by user{' '}
-            {playlistOwner}
-          </marquee>
+        {spotifyDetails[0] && (
+          <p className="playlistIdentity">
+            You are listening to <span>{playlistName}</span>, created by{' '}
+            <span>{playlistOwner}</span>
+          </p>
         )}
         {spotifyDetails[0] && (
           <>

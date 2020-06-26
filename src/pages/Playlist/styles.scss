@@ -1,19 +1,53 @@
+@import '../../assets/scss/variables';
+
 .playlist {
   color: white !important;
 }
 
-#add-track-form {
+#addTrackForm {
   display: flex;
+  flex-flow: row wrap;
   align-items: center;
   justify-content: center;
   padding: 3% 0;
   padding-bottom: 1%;
 }
 
+#newPlaylistButton{
+  height:100%;
+  padding: 1rem 2.5rem;
+  margin: 0.5rem 0;
+
+  @media (max-width: $xs-max) {
+    width: 60%;
+  }
+}
+
 #suggestion-list-label {
   color: rgb(221, 223, 223) !important;
 }
 
-marquee {
-  margin: 2rem 0;
+p.playlistIdentity {
+  margin: 2rem 0 !important;
+  font-size: 1.5rem;
+
+  span {
+    font-family: 'PoppinsSemiBold';
+  }
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: #f7f9f9 !important;
+}
+
+.MuiFormControl-root {
+  @media (max-width: $xs-max) {
+    width: 90%;
+    padding: 2% !important;
+  }
+}
+
+.MuiInputBase-root {
+  color: #f7f9f9 !important;
+  font-size: 2em !important;
 }
