@@ -38,6 +38,7 @@ const Playlist = () => {
   const playlistName = useSelector((state) => state.tracks.name);
   const playlistOwner = useSelector((state) => state.tracks.owner);
   const currentTrack = useSelector((state) => state.tracks.currentTrack);
+
   const [userTrackChoice, setUserTrackChoice] = useState(null);
   const [spotifyDetails, setSpotifyDetails] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
@@ -138,12 +139,6 @@ const Playlist = () => {
     <>
       <div className="page playlist">
         <div>
-          {playlistName && (
-            <marquee>
-              You are listening to "{playlistName}", created by user{' '}
-              {playlistOwner}
-            </marquee>
-          )}
           <form
             className={classes.root}
             noValidate
