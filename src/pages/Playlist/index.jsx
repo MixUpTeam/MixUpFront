@@ -42,9 +42,10 @@ const Playlist = () => {
   const [spotifyDetails, setSpotifyDetails] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
-  const setTrackPlaylist = (tracks, name, owner, currentTrack) => {
+  const setTrackPlaylist = (tracks, name, owner, currTrackResponse) => {
+    console.log('setTrackPlaylist -> currentTrack', currTrackResponse);
     dispatch(setTracks(tracks, name, owner));
-    dispatch(setCurrentTrack(currentTrack))
+    dispatch(setCurrentTrack(currTrackResponse));
   };
 
   useEffect(() => {
@@ -96,7 +97,13 @@ const Playlist = () => {
       setSpotifyDetails([...spotifyDetails, userTrackChoice]);
       const playlist = await APIManager.showPlaylist(res.playlist_id);
       if (playlist.status === 'success') {
-        setTrackPlaylist(playlist.entries);
+        console.log('searchBarOnSubmit -> playlist', playlist);
+        setTrackPlaylist(
+          playlist.entries,
+          playlist.name,
+          playlist.owner.id,
+          playlist.entries[0]
+        );
       } else {
         return message.error(playlist.messages[0], 3);
       }
@@ -180,7 +187,12 @@ const Playlist = () => {
         )}
         {spotifyDetails[0] ? (
           <>
-            <Player spotifyTrack={spotifyDetails.find((el) => (el.id === currentTrack.track_spotify_id))} trackPlaylistId={currentTrack.id} />
+            <Player
+              spotifyTrack={spotifyDetails.find(
+                (el) => el.id === currentTrack.track_spotify_id
+              )}
+              trackPlaylistId={currentTrack.id}
+            />
             <PlaylistTable spotifyDetails={spotifyDetails} />
             <div>
               <p>Your favorite songs are not here?</p>

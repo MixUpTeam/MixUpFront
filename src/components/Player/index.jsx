@@ -8,7 +8,7 @@ const Player = () => {
   const tracklist = useSelector((state) => state.tracks.tracks);
 
   const token =
-    'BQB0MlVqBhnxyvk1KXKIh60eoYDy9Bv2Nb9dI5XRLqxBaW6DtlhREQZZwhmshkj4isCwUFopFRcdIlLyK6Gn441gJS23ATp0LJ7yZNraHmHOlELGNqLN2hD3oWmrOBlHoUjIUcXPxotJBgRJcUl0B3TAtWzjZ8H7kzkHZ751Nyuy6AA9LNhiKbSSqw';
+    'BQCusNh-6863xBq2KBzSAKcJAgoQK8paaihWc8o5ojRicM9NczmdkKU6UVJmev65QOxan8zRRGPyXiDvEhatNkMV9xRAVRqEvxrSkZfsb9XeutGHexBlEWlcZcwfz9-mHvGVZkkkOEILirFG3WF7z_WiStiOW1uzKybn7JwK-piIv-zQv0ZB8HH70OvVUnW4y8Lf7SjkIw3qyA8';
 
   const uris = [];
   tracklist
