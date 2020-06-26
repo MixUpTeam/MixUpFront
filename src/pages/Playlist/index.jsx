@@ -40,10 +40,10 @@ const Playlist = () => {
   const currentTrack = useSelector((state) => state.tracks.currentTrack);
   const [userTrackChoice, setUserTrackChoice] = useState(null);
   const [spotifyDetails, setSpotifyDetails] = useState([]);
+  console.log('Playlist -> spotifyDetails', spotifyDetails);
   const [suggestions, setSuggestions] = useState([]);
 
   const setTrackPlaylist = (tracks, name, owner, currTrackResponse) => {
-    console.log('setTrackPlaylist -> currentTrack', currTrackResponse);
     dispatch(setTracks(tracks, name, owner));
     dispatch(setCurrentTrack(currTrackResponse));
   };
@@ -96,8 +96,10 @@ const Playlist = () => {
     if (res.status === 'success') {
       setSpotifyDetails([...spotifyDetails, userTrackChoice]);
       const playlist = await APIManager.showPlaylist(res.playlist_id);
+      console.log('searchBarOnSubmit -> playlist', playlist);
       if (playlist.status === 'success') {
         console.log('searchBarOnSubmit -> playlist', playlist);
+        console.log('searchBarOnSubmit -> playlist', playlist.entries[0]);
         setTrackPlaylist(
           playlist.entries,
           playlist.name,
@@ -179,14 +181,12 @@ const Playlist = () => {
         </div>
         <ShareButton />
 
-        {spotifyDetails[0] && (
-          <p className="playlistIdentity">
-            You are listening to <span>{playlistName}</span>, created by{' '}
-            <span>{playlistOwner}</span>
-          </p>
-        )}
-        {spotifyDetails[0] ? (
+        {spotifyDetails[0] && currentTrack ? (
           <>
+            <p className="playlistIdentity">
+              You are listening to <span>{playlistName}</span>, created by{' '}
+              <span>{playlistOwner}</span>
+            </p>
             <Player
               spotifyTrack={spotifyDetails.find(
                 (el) => el.id === currentTrack.track_spotify_id
