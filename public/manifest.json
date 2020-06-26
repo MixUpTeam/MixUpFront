@@ -3,11 +3,6 @@
   "short_name": "MixUp",
   "icons": [
     {
-      "src": "assets/images/mix_up_logo_128.png",
-      "sizes": "128x128",
-      "type": "image/png"
-    },
-    {
       "src": "assets/images/mix_up_logo_144.png",
       "sizes": "144x144",
       "type": "image/png"
@@ -34,8 +29,8 @@
     }
   ],
   "lang": "en",
-  "start_url": "/index.html",
+  "start_url": ".",
   "display": "standalone",
-  "background_color": "rgb(44, 49, 52)",
-  "theme_color": "rgb(44, 49, 52)"
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
 }
