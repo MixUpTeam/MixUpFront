@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { cookieName } from '../../constants';
 
 const API = axios.create({
-  baseURL: 'https://mixup-the-app.herokuapp.com',
+  baseURL: 'http://localhost:8080',
 });
 
 API.interceptors.request.use(

@@ -34,26 +34,32 @@ const Playlist = () => {
   const { playlistId } = useParams();
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user.data.id);
-  const tracklist = useSelector((state) => state.tracks.tracks);
   const playlistName = useSelector((state) => state.tracks.name);
   const playlistOwner = useSelector((state) => state.tracks.owner);
+
+  const tracklist = useSelector((state) => state.tracks.tracks);
   const currentTrack = useSelector((state) => state.tracks.currentTrack);
 
   const [userTrackChoice, setUserTrackChoice] = useState(null);
   const [spotifyDetails, setSpotifyDetails] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
+  // 2 & 7
   const setTrackPlaylist = (tracks, name, owner, currTrackResponse) => {
+    console.log('setTrackPlaylist -> setTrackPlaylist', setTrackPlaylist);
     dispatch(setTracks(tracks, name, owner));
     dispatch(setCurrentTrack(currTrackResponse));
   };
 
+  // 1
   useEffect(() => {
     setTrackPlaylist([]);
     const fetchPlaylist = async () => {
       const res = await APIManager.showPlaylist(playlistId);
+
       if (res.status === 'success') {
         if (res.entries[0]) {
+          console.log('useEffect 1');
           setTrackPlaylist(
             res.entries,
             res.name,
@@ -73,23 +79,23 @@ const Playlist = () => {
     fetchPlaylist();
   }, [playlistId]);
 
+  // #3minus3 & 8
   useEffect(() => {
     const fetchTracks = async () => {
-      try {
-        const res = await SpotifyAPIManager.getTrackById(tracklist);
-        setSpotifyDetails(res.data.tracks);
-      } catch (error) {
-        console.error(error);
-        return message.error(
-          'An error occurred, please contact the service provider.',
-          3
-        );
-      }
-    };
-    if (tracklist[0] && tracklist[0].playlist_id == playlistId) fetchTracks();
-  }, [tracklist]);
+      console.log('useEffect 2');
 
+      const res = await SpotifyAPIManager.getTrackById(tracklist);
+      setSpotifyDetails(res.data.tracks);
+    };
+
+    if (tracklist[0]) {
+      fetchTracks();
+    }
+  }, [playlistId, tracklist]);
+
+  // 6
   const searchBarOnSubmit = async (e) => {
+    console.log('searchBarOnSubmit -> searchBarOnSubmit', searchBarOnSubmit);
     e.preventDefault();
     if (!userTrackChoice) return message.error('Please choose a track');
     const res = await APIManager.addTrackToPlaylist(
@@ -99,11 +105,11 @@ const Playlist = () => {
     );
     if (res.status === 'success') {
       setSpotifyDetails([...spotifyDetails, userTrackChoice]);
+
       const playlist = await APIManager.showPlaylist(res.playlist_id);
-      console.log('searchBarOnSubmit -> playlist', playlist);
+
       if (playlist.status === 'success') {
         console.log('searchBarOnSubmit -> playlist', playlist);
-        console.log('searchBarOnSubmit -> playlist', playlist.entries[0]);
         setTrackPlaylist(
           playlist.entries,
           playlist.name,
@@ -118,12 +124,16 @@ const Playlist = () => {
     }
   };
 
+  // 5
   const inputOnChange = (e, values) => {
+    console.log('inputOnChange -> inputOnChange', inputOnChange);
     const selectedTrack = values;
     if (selectedTrack) setUserTrackChoice(selectedTrack);
   };
 
+  // 4
   const handleChange = async (e) => {
+    console.log('handleChange -> handleChange', handleChange);
     const inputSearch = e.target.value;
     if (inputSearch) {
       try {
@@ -182,16 +192,19 @@ const Playlist = () => {
         {spotifyDetails[0] && currentTrack ? (
           <>
             <p className="playlistIdentity">
-              You are listening to <span>{playlistName}</span>, created by{' '}
+              You are listening to <span>{playlistName}</span>, created by
               <span>{playlistOwner}</span>
             </p>
+
             <Player
               spotifyTrack={spotifyDetails.find(
                 (el) => el.id === currentTrack.track_spotify_id
               )}
               trackPlaylistId={currentTrack.id}
             />
+
             <PlaylistTable spotifyDetails={spotifyDetails} />
+
             <div>
               <p>Your favorite songs are not here?</p>
               <NewPlaylistButton />
