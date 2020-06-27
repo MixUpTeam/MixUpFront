@@ -91,7 +91,6 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
   spotifyDetails &&
     spotifyDetails.length < 41 &&
     tracklist
-      .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
       .sort((a, b) => b.score - a.score)
       .map((p) => {
         const title = spotifyDetails.find((el) => p.track_spotify_id === el.id)

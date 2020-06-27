@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SpotifyPlayer from 'react-spotify-web-playback';
-// import APIManager from 'services/APIManager';
+import APIManager from 'services/APIManager';
 import { useSelector, useDispatch } from 'react-redux';
 // import { message } from 'antd';
 import { setCurrentTrack } from '../../redux';
@@ -14,20 +14,28 @@ const Player = ({ spotifyTrack, trackPlaylistId }: Player) => {
   const tracklist = useSelector((state) => state.tracks.tracks);
   const [nxtTrack, setNextTrack] = useState(null);
 
-  const token =
-    'BQDC2RjOEcpjc1cB9UvJ0PRUq_dToTYcVQH1HGeDZLlByZYdbQJkriZxW5m-3CWOl9HD-WPNpIjPIe8BSIOJval3vGO-gx6IVs6FJrdiO7YZDNjaIUKrRoiqEkCBourmSlLr-TQfPu_-dOWF1G0jcYr_hfs76GmIklcQBIlvwkxD1sF4-We0b3QyH18HBpUAow0sXMpd8JH5jmQ';
+  console.log('player -> trackPlaylistId.playlist_id', trackPlaylistId);
 
-  const test = () => {
+  const token =
+    'BQCIe8ERUsyIwziwopWPVSRIAiVjNCm1CGBnJccuKeO89UvEFqlotmHqCcfagNS63-v36ZGI17VwHD1UKGzfwFGUhBs-TvK8VZeVv1vESCUWb80PgSn-6j-2-nGpXbIDHeDj51vfWmgsXdS7wFRK9rcT23eZ74HQtbMrYRl96-ZB9RibF8fL5_72VPqgnnp6MxXg2roKL34mdvc';
+
+  const test = async () => {
+    console.log('test -> spotifyTrack', spotifyTrack);
+    const res = await APIManager.finishTrack(trackPlaylistId);
+    console.log(res);
+
+    const newPlaylist = await APIManager.showPlaylist(res.playlist_id);
+    console.log('test -> newPlaylist', newPlaylist);
     dispatch(setCurrentTrack(nxtTrack));
   };
 
-  useEffect(() => {
-    setNextTrack(tracklist[0]);
-  }, [tracklist]);
+  // useEffect(() => {
+  //   setNextTrack(tracklist[0]);
+  // }, [tracklist]);
 
-  useEffect(() => {
-    setTimeout(test, spotifyTrack.duration_ms * 0.9);
-  }, [spotifyTrack]);
+  // useEffect(() => {
+  //   setTimeout(test, spotifyTrack.duration_ms * 0.9);
+  // }, [spotifyTrack]);
 
   const renderedItem = () => {
     return (
@@ -38,6 +46,13 @@ const Player = ({ spotifyTrack, trackPlaylistId }: Player) => {
           token={token}
           // eslint-disable-next-line react/prop-types
           uris={['spotify:track:55p8TQ1ggGYOO1gLQrC52D', `${spotifyTrack.uri}`]}
+          callback={(e) => {
+            console.log(e);
+            if (e.position >= 97.5) {
+              console.log('presque fini');
+              test();
+            }
+          }}
         />
       </>
     );

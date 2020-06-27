@@ -85,6 +85,7 @@ const Playlist = () => {
       console.log('useEffect 2');
 
       const res = await SpotifyAPIManager.getTrackById(tracklist);
+      console.log('fetchTracks -> res', res);
       setSpotifyDetails(res.data.tracks);
     };
 

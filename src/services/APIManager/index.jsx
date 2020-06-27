@@ -89,6 +89,8 @@ export default class APIManager {
     const res = await API.get(
       `api/v1/track_playlists/${trackPlaylistID}/finish_track`
     );
+    console.log('APIManager -> finishTrack -> res', res);
+
     return res.data;
   }
 }
