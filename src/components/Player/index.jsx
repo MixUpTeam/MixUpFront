@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import SpotifyPlayer from 'react-spotify-web-playback';
 import APIManager from 'services/APIManager';
 import { useDispatch } from 'react-redux';
@@ -10,12 +9,11 @@ import './styles.scss';
 
 // eslint-disable-next-line react/prop-types
 const Player = ({ spotifyTrack, trackPlaylistId }) => {
-  const { playlistId } = useParams();
   const dispatch = useDispatch();
 
   const transition = async () => {
-    await APIManager.finishTrack(trackPlaylistId);
-    const newPlaylist = await APIManager.showPlaylist(playlistId);
+    const res = await APIManager.finishTrack(trackPlaylistId);
+    const newPlaylist = await APIManager.showPlaylist(res.playlist_id);
 
     dispatch(setTracks(newPlaylist.entries));
     dispatch(setCurrentTrack(newPlaylist.entries[0]));
