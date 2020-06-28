@@ -98,10 +98,11 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
 
         const artist = spotifyDetails.find((el) => p.track_spotify_id === el.id)
           .id;
-
-        rows.push(
-          createData(title, artist, p.score, p.added_by.username, p.id)
-        );
+        if (p.is_played === false) {
+          rows.push(
+            createData(title, artist, p.score, p.added_by.username, p.id)
+          );
+        }
       });
 
   return (
