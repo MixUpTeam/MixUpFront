@@ -34,9 +34,10 @@ const Playlist = () => {
   const { playlistId } = useParams();
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user.data.id);
-  const tracklist = useSelector((state) => state.tracks.tracks);
   const playlistName = useSelector((state) => state.tracks.name);
   const playlistOwner = useSelector((state) => state.tracks.owner);
+
+  const tracklist = useSelector((state) => state.tracks.tracks);
   const currentTrack = useSelector((state) => state.tracks.currentTrack);
 
   const [userTrackChoice, setUserTrackChoice] = useState(null);
@@ -52,6 +53,7 @@ const Playlist = () => {
     setTrackPlaylist([]);
     const fetchPlaylist = async () => {
       const res = await APIManager.showPlaylist(playlistId);
+
       if (res.status === 'success') {
         if (res.entries[0]) {
           setTrackPlaylist(
@@ -75,19 +77,14 @@ const Playlist = () => {
 
   useEffect(() => {
     const fetchTracks = async () => {
-      try {
-        const res = await SpotifyAPIManager.getTrackById(tracklist);
-        setSpotifyDetails(res.data.tracks);
-      } catch (error) {
-        console.error(error);
-        return message.error(
-          'An error occurred, please contact the service provider.',
-          3
-        );
-      }
+      const res = await SpotifyAPIManager.getTrackById(tracklist);
+      setSpotifyDetails(res.data.tracks);
     };
-    if (tracklist[0] && tracklist[0].playlist_id == playlistId) fetchTracks();
-  }, [tracklist]);
+
+    if (tracklist[0]) {
+      fetchTracks();
+    }
+  }, [playlistId, tracklist]);
 
   const searchBarOnSubmit = async (e) => {
     e.preventDefault();
@@ -99,11 +96,11 @@ const Playlist = () => {
     );
     if (res.status === 'success') {
       setSpotifyDetails([...spotifyDetails, userTrackChoice]);
+
       const playlist = await APIManager.showPlaylist(res.playlist_id);
-      console.log('searchBarOnSubmit -> playlist', playlist);
+
       if (playlist.status === 'success') {
         console.log('searchBarOnSubmit -> playlist', playlist);
-        console.log('searchBarOnSubmit -> playlist', playlist.entries[0]);
         setTrackPlaylist(
           playlist.entries,
           playlist.name,
@@ -125,12 +122,13 @@ const Playlist = () => {
 
   const handleChange = async (e) => {
     const inputSearch = e.target.value;
+
     if (inputSearch) {
       try {
         const res = await SpotifyAPIManager.searchTrackByQuery(inputSearch);
-        setSuggestions(res.data.tracks.items);
+        return setSuggestions(res.data.tracks.items);
       } catch (error) {
-        console.error(error);
+        console.log(error.response);
         return message.error(
           'An error occurred, please contact the service provider.',
           3
@@ -182,16 +180,19 @@ const Playlist = () => {
         {spotifyDetails[0] && currentTrack ? (
           <>
             <p className="playlistIdentity">
-              You are listening to <span>{playlistName}</span>, created by{' '}
+              You are listening to <span>{playlistName}</span>, created by
               <span>{playlistOwner}</span>
             </p>
+
             <Player
               spotifyTrack={spotifyDetails.find(
                 (el) => el.id === currentTrack.track_spotify_id
               )}
               trackPlaylistId={currentTrack.id}
             />
+
             <PlaylistTable spotifyDetails={spotifyDetails} />
+
             <div>
               <p>Your favorite songs are not here?</p>
               <NewPlaylistButton />

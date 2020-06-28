@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { cookieName } from '../../constants';
 
 const API = axios.create({
-  baseURL: 'https://mixup-the-app.herokuapp.com',
+  baseURL: 'http://localhost:8080',
 });
 
 API.interceptors.request.use(
@@ -89,6 +89,8 @@ export default class APIManager {
     const res = await API.get(
       `api/v1/track_playlists/${trackPlaylistID}/finish_track`
     );
+    console.log('APIManager -> finishTrack -> res', res);
+
     return res.data;
   }
 }

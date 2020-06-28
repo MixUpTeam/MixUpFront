@@ -28,6 +28,7 @@ const NewPlaylist = () => {
     e.preventDefault();
     if (input) {
       const res = await APIManager.createPlaylist(userId, input);
+      console.log('handleSubmit -> res', res);
       if (res.status === 'success') return history.push(`/playlist/${res.id}`);
       return message.error(res.messages[0], 3);
     }
