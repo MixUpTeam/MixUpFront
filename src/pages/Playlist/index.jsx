@@ -44,14 +44,11 @@ const Playlist = () => {
   const [spotifyDetails, setSpotifyDetails] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
-  // 2 & 7
   const setTrackPlaylist = (tracks, name, owner, currTrackResponse) => {
-    console.log('setTrackPlaylist -> setTrackPlaylist', setTrackPlaylist);
     dispatch(setTracks(tracks, name, owner));
     dispatch(setCurrentTrack(currTrackResponse));
   };
 
-  // 1
   useEffect(() => {
     setTrackPlaylist([]);
     const fetchPlaylist = async () => {
@@ -59,7 +56,6 @@ const Playlist = () => {
 
       if (res.status === 'success') {
         if (res.entries[0]) {
-          console.log('useEffect 1');
           setTrackPlaylist(
             res.entries,
             res.name,
@@ -79,13 +75,9 @@ const Playlist = () => {
     fetchPlaylist();
   }, [playlistId]);
 
-  // #3minus3 & 8
   useEffect(() => {
     const fetchTracks = async () => {
-      console.log('useEffect 2');
-
       const res = await SpotifyAPIManager.getTrackById(tracklist);
-      console.log('fetchTracks -> res', res);
       setSpotifyDetails(res.data.tracks);
     };
 
@@ -94,9 +86,7 @@ const Playlist = () => {
     }
   }, [playlistId, tracklist]);
 
-  // 6
   const searchBarOnSubmit = async (e) => {
-    console.log('searchBarOnSubmit -> searchBarOnSubmit', searchBarOnSubmit);
     e.preventDefault();
     if (!userTrackChoice) return message.error('Please choose a track');
     const res = await APIManager.addTrackToPlaylist(
@@ -125,23 +115,20 @@ const Playlist = () => {
     }
   };
 
-  // 5
   const inputOnChange = (e, values) => {
-    console.log('inputOnChange -> inputOnChange', inputOnChange);
     const selectedTrack = values;
     if (selectedTrack) setUserTrackChoice(selectedTrack);
   };
 
-  // 4
   const handleChange = async (e) => {
-    console.log('handleChange -> handleChange', handleChange);
     const inputSearch = e.target.value;
+
     if (inputSearch) {
       try {
         const res = await SpotifyAPIManager.searchTrackByQuery(inputSearch);
-        setSuggestions(res.data.tracks.items);
+        return setSuggestions(res.data.tracks.items);
       } catch (error) {
-        console.error(error);
+        console.log(error.response);
         return message.error(
           'An error occurred, please contact the service provider.',
           3
