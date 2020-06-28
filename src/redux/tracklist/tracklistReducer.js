@@ -1,8 +1,4 @@
-import {
-  SET_TRACKS,
-  CREATE_TRACK,
-  SET_CURRENT_TRACK,
-} from 'redux/tracklist/tracklistType';
+import { SET_TRACKS, SET_CURRENT_TRACK } from 'redux/tracklist/tracklistType';
 
 const initialState = {
   tracks: [],
@@ -20,11 +16,7 @@ const tracklistReducer = (state = initialState, action) => {
         name: action.name,
         owner: action.owner,
       };
-    case CREATE_TRACK:
-      return {
-        ...state,
-        tracks: state.tracks.concat(action.details),
-      };
+
     case SET_CURRENT_TRACK:
       return {
         ...state,
