@@ -1,11 +1,4 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
-import { cookieNameForSpotifyAuth, spotifyTokenPremium } from '../../constants';
-
-const token =
-  Cookies.get(cookieNameForSpotifyAuth) !== undefined
-    ? Cookies.get(cookieNameForSpotifyAuth)
-    : spotifyTokenPremium;
 
 const API = axios.create({
   baseURL: 'https://api.spotify.com/v1/',
@@ -17,7 +10,7 @@ API.interceptors.request.use(
     headers: {
       ...headers,
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${process.env.REACT_APP_SPOTIFY_TOKEN}`,
     },
   }),
   (error) => {
