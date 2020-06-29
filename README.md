@@ -49,7 +49,6 @@ Challenges
 Unresolved issues
 
 1. testing that devise-jwt actually sends a token, and testing API request with header
-2. async being triggered twice
 
 ## Authors
 

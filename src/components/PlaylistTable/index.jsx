@@ -22,7 +22,7 @@ import './styles.scss';
 import { message } from 'antd';
 import { setTracks } from '../../redux';
 
-const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
+const PlaylistTable = ({ spotifyDetails }) => {
   const dispatch = useDispatch();
   const tracklist = useSelector((state) => state.tracks.tracks);
   const currentTrack = useSelector((state) => state.tracks.currentTrack);
@@ -98,7 +98,7 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
           .name;
 
         const artist = spotifyDetails.find((el) => p.track_spotify_id === el.id)
-          .id;
+          .artists[0].name;
         if (p.is_played === false) {
           rows.push(
             createData(title, artist, p.score, p.added_by.username, p.id)
