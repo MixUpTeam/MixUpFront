@@ -25,6 +25,7 @@ import { setTracks } from '../../redux';
 const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
   const dispatch = useDispatch();
   const tracklist = useSelector((state) => state.tracks.tracks);
+  const currentTrack = useSelector((state) => state.tracks.currentTrack);
   const userId = useSelector((state) => state.user.data.id);
   const useStyles = makeStyles({
     root: {
@@ -159,31 +160,36 @@ const PlaylistTable = ({ spotifyDetails }: PlaylistTable) => {
                         </TableCell>
                       );
                     })}
-                    <TableCell>
-                      <Tooltip title="Up vote">
-                        <Fab
-                          style={{
-                            backgroundColor: 'rgb(77, 217, 117)',
-                            color: 'rgb(247, 249, 249)',
-                          }}
-                          className={classes.fab}
-                          onClick={() => Likes(row)}
-                        >
-                          <MusicNoteOutlinedIcon />
-                        </Fab>
-                      </Tooltip>
-                    </TableCell>
-                    <TableCell>
-                      <Tooltip title="Down vote">
-                        <Fab
-                          color="secondary"
-                          className={classes.fab}
-                          onClick={() => Dislikes(row)}
-                        >
-                          <MusicOffOutlinedIcon />
-                        </Fab>
-                      </Tooltip>
-                    </TableCell>
+                    {row.id !== currentTrack.id && (
+                      <>
+                        <TableCell>
+                          <Tooltip title="Up vote">
+                            <Fab
+                              style={{
+                                backgroundColor: 'rgb(77, 217, 117)',
+                                color: 'rgb(247, 249, 249)',
+                              }}
+                              className={classes.fab}
+                              onClick={() => Likes(row)}
+                            >
+                              <MusicNoteOutlinedIcon />
+                            </Fab>
+                          </Tooltip>
+                        </TableCell>
+
+                        <TableCell>
+                          <Tooltip title="Down vote">
+                            <Fab
+                              color="secondary"
+                              className={classes.fab}
+                              onClick={() => Dislikes(row)}
+                            >
+                              <MusicOffOutlinedIcon />
+                            </Fab>
+                          </Tooltip>
+                        </TableCell>
+                      </>
+                    )}
                   </TableRow>
                 );
               })}
