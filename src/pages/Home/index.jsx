@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.scss';
-import bgVideo from 'assets/videos/home-bg.mp4';
-import NewPlaylistButton from 'components/NewPlaylistButton';
+import bgVideo from '../../assets/videos/home-bg.mp4';
+import NewPlaylistButton from '../../components/NewPlaylistButton';
 
 const Home = () => {
   return (

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import APIManager from 'services/APIManager';
 import shortID from 'shortid';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -20,6 +19,7 @@ import Chip from '@material-ui/core/Chip';
 import './styles.scss';
 
 import { message } from 'antd';
+import APIManager from '../../services/APIManager';
 import { setTracks } from '../../redux';
 
 const PlaylistTable = ({ spotifyDetails }) => {

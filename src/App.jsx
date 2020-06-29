@@ -1,17 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Navbar from 'components/Navbar';
-import Authroute from 'tools/Authroute';
+import Navbar from './components/Navbar';
+import Authroute from './tools/Authroute';
 
-import Register from 'pages/Register';
-import LogIn from 'pages/Login';
-import Home from 'pages/Home';
-import About from 'pages/About';
-import Profile from 'pages/Profile';
-import NotFound from 'pages/NotFound';
-import Playlist from 'pages/Playlist';
-import NewPlaylist from 'pages/NewPlaylist';
+import Register from './pages/Register';
+import LogIn from './pages/Login';
+import Home from './pages/Home';
+import About from './pages/About';
+import Profile from './pages/Profile';
+import NotFound from './pages/NotFound';
+import Playlist from './pages/Playlist';
+import NewPlaylist from './pages/NewPlaylist';
 
 const App = () => {
   return (

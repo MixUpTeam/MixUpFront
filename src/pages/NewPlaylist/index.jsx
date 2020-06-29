@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import APIManager from 'services/APIManager';
 import { message } from 'antd';
+import APIManager from '../../services/APIManager';
 
 const useStyles = makeStyles((theme) => ({
   root: {

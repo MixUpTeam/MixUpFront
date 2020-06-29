@@ -1,4 +1,4 @@
-import { CONNECTION, DISCONNECTION } from 'redux/log/logType';
+import { CONNECTION, DISCONNECTION } from './logType';
 
 export const setConnection = () => {
   return {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import SpotifyPlayer from 'react-spotify-web-playback';
-import APIManager from 'services/APIManager';
 import { useDispatch } from 'react-redux';
+import APIManager from '../../services/APIManager';
 
 import { spotifyTokenPremium } from '../../constants';
 import { setTracks, setCurrentTrack } from '../../redux';

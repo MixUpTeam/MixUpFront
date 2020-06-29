@@ -14,7 +14,7 @@ import {
   SettingOutlined,
   CustomerServiceOutlined,
 } from '@ant-design/icons';
-import APIManager from 'services/APIManager';
+import APIManager from '../../services/APIManager';
 import { cookieName } from '../../constants';
 
 import { removeConnection, removeProfile } from '../../redux';

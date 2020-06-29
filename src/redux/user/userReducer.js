@@ -1,5 +1,5 @@
-import { PROFILE, REMOVE_PROFILE } from 'redux/user/userType';
 import Cookies from 'js-cookie';
+import { PROFILE, REMOVE_PROFILE } from './userType';
 import { cookieName } from '../../constants';
 
 const initialState = {
