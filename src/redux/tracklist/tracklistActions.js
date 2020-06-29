@@ -1,4 +1,4 @@
-import { SET_TRACKS, SET_CURRENT_TRACK } from 'redux/tracklist/tracklistType';
+import { SET_TRACKS, SET_CURRENT_TRACK } from './tracklistType';
 
 export const setTracks = (tracks, name, owner) => {
   return {

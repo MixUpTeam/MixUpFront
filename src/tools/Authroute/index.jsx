@@ -4,7 +4,7 @@ import { message } from 'antd';
 
 import { useSelector } from 'react-redux';
 
-const AuthRoute = ({ component: Component, ...rest }: AuthRoute) => {
+const AuthRoute = ({ component: Component, ...rest }) => {
   const logStatus = useSelector((state) => state.log.user_connected);
 
   return (

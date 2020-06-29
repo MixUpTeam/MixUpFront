@@ -1,4 +1,4 @@
-import { PROFILE, REMOVE_PROFILE } from 'redux/user/userType';
+import { PROFILE, REMOVE_PROFILE } from './userType';
 
 export const setProfile = (data) => {
   return {

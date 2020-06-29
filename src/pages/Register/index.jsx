@@ -4,10 +4,10 @@ import { useDispatch } from 'react-redux';
 
 import '../../assets/scss/forms.scss';
 
-import { Form, Input, Button, message, Divider } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import Cookies from 'js-cookie';
 
-import APIManager from 'services/APIManager';
+import APIManager from '../../services/APIManager';
 import { cookieName } from '../../constants';
 import { setProfile, setConnection } from '../../redux';
 

@@ -7,7 +7,7 @@ import '../../assets/scss/forms.scss';
 import { Form, Input, Button, message } from 'antd';
 import Cookies from 'js-cookie';
 
-import APIManager from 'services/APIManager';
+import APIManager from '../../services/APIManager';
 import { cookieName } from '../../constants';
 
 import { setConnection, setProfile } from '../../redux';

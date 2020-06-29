@@ -1,5 +1,5 @@
-import { CONNECTION, DISCONNECTION } from 'redux/log/logType';
 import Cookies from 'js-cookie';
+import { CONNECTION, DISCONNECTION } from './logType';
 import { cookieName } from '../../constants';
 
 const initialState = {
