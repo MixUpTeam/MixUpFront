@@ -1,20 +1,11 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { cookieNameForSpotifyAuth } from '../../constants';
-import SpotifyAuthManager from '../SpotifyAuthManager';
-
-const renewSpotifyToken = async () => {
-  const res = await SpotifyAuthManager.getToken();
-  Cookies.set(cookieNameForSpotifyAuth, res.data.access_token, {
-    expires: new Date(new Date().getTime() + 55 * 60 * 1000),
-  });
-  return res.data.access_token;
-};
+import { cookieNameForSpotifyAuth, spotifyTokenPremium } from '../../constants';
 
 const token =
   Cookies.get(cookieNameForSpotifyAuth) !== undefined
     ? Cookies.get(cookieNameForSpotifyAuth)
-    : renewSpotifyToken();
+    : spotifyTokenPremium;
 
 const API = axios.create({
   baseURL: 'https://api.spotify.com/v1/',

@@ -33,10 +33,10 @@ const Playlist = () => {
   const classes = useStyles();
   const { playlistId } = useParams();
   const dispatch = useDispatch();
+
   const userId = useSelector((state) => state.user.data.id);
   const playlistName = useSelector((state) => state.tracks.name);
   const playlistOwner = useSelector((state) => state.tracks.owner);
-
   const tracklist = useSelector((state) => state.tracks.tracks);
   const currentTrack = useSelector((state) => state.tracks.currentTrack);
 
@@ -100,7 +100,6 @@ const Playlist = () => {
       const playlist = await APIManager.showPlaylist(res.playlist_id);
 
       if (playlist.status === 'success') {
-        console.log('searchBarOnSubmit -> playlist', playlist);
         setTrackPlaylist(
           playlist.entries,
           playlist.name,
