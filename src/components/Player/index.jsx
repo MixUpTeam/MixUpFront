@@ -18,7 +18,7 @@ const Player = ({ spotifyTrack, trackPlaylistId }) => {
   };
 
   useEffect(() => {
-    setTimeout(transition, spotifyTrack.duration_ms * 0.1);
+    setTimeout(transition, spotifyTrack.duration_ms * 0.95);
   }, [spotifyTrack]);
 
   return (
