@@ -1,4 +1,1 @@
 export const cookieName = 'mixUpUserCookie';
-export const cookieNameForSpotifyAuth = 'mixUpSpotifyAuthCookie';
-export const spotifyTokenPremium =
-  'BQAt7NnZIYFoo3WUf7L_V62q6yVH0BJhjAPHMyAv07yg99rEN1QzsaRcRIKLOrkfESTGkiWropgvTUCxuJ60S2jS4KZLA_K2LQwrKgCJ9T9310oqWJzgl-UxjIQSnpKNHY2LZsGm7dSmrZsbIPwwXR1EePV2YUQit0AISdXI7JPleosTf1ynlvt1WSC3NcOA4QZGjFmt9F1Rpek';
